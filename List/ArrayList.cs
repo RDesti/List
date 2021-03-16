@@ -86,7 +86,22 @@ namespace List
         }
         public void RemoveElementByIndex(int index)
         {
-
+            if (index < 0 || index > Length)
+            {
+                throw new IndexOutOfRangeException("Sorry, but you are accessing a non-existent index");
+            }
+            int[] tmpArray = new int[_array.Length - 1];
+            int i;
+            for(i = 0; i < index; i++)
+            {
+                tmpArray[i] = _array[i];
+            }
+            for(i = index; i < tmpArray.Length; i++)
+            {
+                tmpArray[i] = _array[i + 1];
+            }
+            _array = tmpArray;
+            --Length;
         }
 
         private void UpSize()
