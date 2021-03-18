@@ -4,10 +4,19 @@ namespace List.Tests
 {
     public class ArrayListTests
     {
-        [Test]
-        public void Test1()
+        [TestCase(new int[] { 1, 2, 3 }, new int[] { 1, 2, 3, 4 })]
+        [TestCase(new int[] { 1 }, new int[] { 1, 4 })]
+        [TestCase(new int[] { }, new int[] { 4 })]
+        [TestCase(new int[] { 1, 2, 3 }, new int[] { 1, 2, 3, 4 })]
+        [TestCase(new int[] { 1, 2, 3 }, new int[] { 1, 2, 3, 4 })]
+
+        public void Test1(int[] a, int[] b)
         {
-            Assert.Pass();
+            ArrayList actual = new ArrayList(a);
+            ArrayList expected = new ArrayList(b);
+            actual.Add(4);
+
+            Assert.AreEqual(expected, actual); 
         }
     }
 }
