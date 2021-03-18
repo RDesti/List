@@ -15,105 +15,109 @@ namespace List
             _array = new int[10];
         }
 
-        public void AddElement(int value)
+        public void Add(int value)
         {
-            if(Length == _array.Length)
-            {
-                UpSize();
-            }
+            Resize();
             _array[Length] = value;
             ++Length;
         }
-        public void AddElementToBeginning(int value)
+        public void AddInFront(int value)
         {
-            if(Length == _array.Length)
-            {
-                UpSize();
-            }
-            int[] tmpArray = new int[_array.Length + 1];
-            for(int i = 1; i < tmpArray.Length; i++)
-            {
-                tmpArray[i] = _array[i - 1];
-            }
-            tmpArray[0] = value;
-            _array = tmpArray;
             ++Length;
+            Resize();
+            MoveRightToIndex(0, 1);
+            _array[0] = value;
         }
-        public void AddElementByIndex(int index, int value)
+        public void AddByIndex(int index, int value)
         {
             if (index < 0 || index > Length)
             {
                 throw new IndexOutOfRangeException("Sorry, but you are accessing a non-existent index");
             }
-            if(Length == _array.Length)
-            {
-                UpSize();
-            }
-            int i;
-            int[] tmpArray = new int[_array.Length + 1];
-            for(i = 0; i < index; i++)
-            {
-                tmpArray[i] = _array[i];
-            }
-            int a = index + 1;
-            for(i = a; i < tmpArray.Length; i++)
-            {
-                tmpArray[i] = _array[i - 1];
-            }
-            tmpArray[index] = value;
-            _array = tmpArray;
             ++Length;
+            MoveRightToIndex(index, 1);
+            Resize();
+            _array[index] = value;
         }
-        public void RemoveElement(int value)
+        public void Remove()
         {
-            int[] tmpArray = new int[_array.Length - 1];
-            for(int i = 0; i < tmpArray.Length; i++)
-            {
-                tmpArray[i] = _array[i];
-            }
-            _array = tmpArray;
             --Length;
+            Resize();
         }
-        public void RemoveElementToBeginning(int value)
+        public void RemoveInFront()
         {
-            int[] tmpArray = new int[_array.Length - 1];
-            for(int i = 0; i < tmpArray.Length; i++)
-            {
-                tmpArray[i] = _array[i + 1];
-            }
-            _array = tmpArray;
             --Length;
+            MoveLeftToIndex(0, 1);
+            Resize();
         }
-        public void RemoveElementByIndex(int index)
+        public void RemoveByIndex(int index)
         {
             if (index < 0 || index > Length)
             {
                 throw new IndexOutOfRangeException("Sorry, but you are accessing a non-existent index");
             }
-            int[] tmpArray = new int[_array.Length - 1];
-            int i;
-            for(i = 0; i < index; i++)
-            {
-                tmpArray[i] = _array[i];
-            }
-            for(i = index; i < tmpArray.Length; i++)
-            {
-                tmpArray[i] = _array[i + 1];
-            }
-            _array = tmpArray;
             --Length;
+            MoveLeftToIndex(index, 1);
+            Resize();
+        }
+        public void Remove(int countElements)
+        {
+            Length -= countElements;
+            Resize();
+        }
+        public void RemoveInFront(int countElements)
+        {
+            Length -= countElements;
+            MoveLeftToIndex(0, countElements);
+            Resize();
+        }
+        public void RemoveByIndex(int index, int countElements)
+        {
+            Length -= countElements;
+            MoveLeftToIndex(index, countElements);
+            Resize();
+        }
+        public void ReturnCurrentLength(int Length)
+        {
+            int currentListLength = _array.Length;
+        }
+        public void GetIndexAccess(int index)
+        {
+            int valueByIndex = _array[index];
         }
 
-        private void UpSize()
-        {
-             int newLength = (int)(_array.Length * 1.33d + 1);
 
+
+
+
+
+
+
+
+
+        private void Resize()
+        {
+            int newLength = (int)(Length * 1.33 + 1);
             int[] tmpArray = new int[newLength];
-            for(int i = 0; i < _array.Length; i++)
+            for (int i = 0; i < _array.Length; i++)
             {
                 tmpArray[i] = _array[i];
             }
             _array = tmpArray;
+        }
+        private void MoveRightToIndex(int index, int count)
+        {
+            for (int i = Length-1; i >= index; i--)
+            {
+                _array[i + count] = _array[i];
+            }
+        }
+        private void MoveLeftToIndex(int index, int count)
+        {
+            for (int i = index; i < Length; i++)
+            {
+                _array[i] = _array[i + count];
+            }
         }
     }
 }
