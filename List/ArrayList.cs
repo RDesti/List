@@ -31,14 +31,20 @@ namespace List
         }
         public void Add(int value)
         {
-            Resize();
+            if (Length >= _array.Length)
+            {
+                Resize(); 
+            }
             _array[Length] = value;
             ++Length;
         }
-        public void AddInFront(int value)
+        public void AddFirst(int value)
         {
             ++Length;
-            Resize();
+            if (Length >= _array.Length)
+            {
+                Resize();
+            }
             MoveRightToIndex(0, 1);
             _array[0] = value;
         }
@@ -49,7 +55,10 @@ namespace List
                 throw new IndexOutOfRangeException("Sorry, but you are accessing a non-existent index");
             }
             ++Length;
-            Resize();
+            if (Length >= _array.Length)
+            {
+                Resize();
+            }
             MoveRightToIndex(index, 1);
             _array[index] = value;
         }
@@ -58,10 +67,11 @@ namespace List
             --Length;
             Resize();
         }
-        public void RemoveInFront()
+        public void RemoveFirst()
         {
             --Length;
-            MoveLeftToIndex(0, 1);
+            int nullIndex = 0;
+            MoveLeftToIndex(nullIndex, 1);
             Resize();
         }
         public void RemoveByIndex(int index)
@@ -76,13 +86,28 @@ namespace List
         }
         public void Remove(int countElements)
         {
-            Length -= countElements;
+            if (Length > countElements)
+            {
+                Length -= countElements;
+            }
+            else
+            {
+                Length -= Length;
+            }
             Resize();
         }
         public void RemoveInFront(int countElements)
         {
-            Length -= countElements;
-            MoveLeftToIndex(0, countElements);
+            if (Length > countElements)
+            {
+                Length -= countElements;
+            }
+            else
+            {
+                Length -= Length;
+            }
+            int nullIndex = 0;
+            MoveLeftToIndex(nullIndex, countElements);
             Resize();
         }
         public void RemoveByIndex(int index, int countElements)
@@ -91,22 +116,33 @@ namespace List
             {
                 throw new IndexOutOfRangeException("Sorry, but you are accessing a non-existent index");
             }
-            Length -= countElements;
+            if (Length > countElements)
+            {
+                Length -= countElements;
+            }
+            else
+            {
+                Length -= Length;
+            }
             MoveLeftToIndex(index, countElements);
             Resize();
-        }
-        public void ReturnCurrentLength(int Length)
-        {
-            int currentListLength = _array.Length;
         }
         public int this[int index]
         {
             get
             {
+                if(index > Length || index < 0)
+                {
+                    throw new IndexOutOfRangeException("Sorry, but you are accessing a non-existent index");
+                }
                 return _array[index];
             }
             set
             {
+                if (index > Length || index < 0)
+                {
+                    throw new IndexOutOfRangeException("Sorry, but you are accessing a non-existent index");
+                }
                 _array[index] = value;
             }
         }
@@ -118,16 +154,9 @@ namespace List
                 if (_array[i] == value)
                 {
                     firstIndex = i;
+                    break;
                 }
             }
-        }
-        public void Change(int index, int value)
-        {
-            if (index < 0 || index > Length)
-            {
-                throw new IndexOutOfRangeException("Sorry, but you are accessing a non-existent index");
-            }
-            _array[index] = value;
         }
         public void GetReverst(ref int[] _array)
         {
@@ -194,9 +223,26 @@ namespace List
         {
 
         }
+        public void RemoveFirstByValue(int value)
+        {
 
+        }
+        public void RemoveAllByValue(int value)
+        {
 
+        }
+        public void AddList(int[] arrayList)
+        {
 
+        }
+        public void AddListFirst(int[] arrayList)
+        {
+
+        }
+        public void AddListByIndex(int[] arrayList)
+        {
+
+        }
 
         private void Resize()
         {
