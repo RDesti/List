@@ -22,11 +22,11 @@ namespace List
         }
         public ArrayList(int[] initialArray)
         {
-            Length = 0;
+            Length = initialArray.Length;
             _array = new int[(int)(Length * 1.33 + 1)];
-            for (int i = 0; i < initialArray.Length; i++)
+            for (int i = 0; i < Length; i++)
             {
-                Add(initialArray[i]);
+                _array[i] = initialArray[i];
             }
         }
         public void Add(int value)
@@ -96,7 +96,7 @@ namespace List
             }
             Resize();
         }
-        public void RemoveInFront(int countElements)
+        public void RemoveFirst(int countElements)
         {
             if (Length > countElements)
             {
@@ -116,13 +116,14 @@ namespace List
             {
                 throw new IndexOutOfRangeException("Sorry, but you are accessing a non-existent index");
             }
-            if (Length > countElements)
+            int remainingElements = Length - index;
+            if (remainingElements > countElements)
             {
                 Length -= countElements;
             }
             else
             {
-                Length -= Length;
+                Length -= remainingElements;
             }
             MoveLeftToIndex(index, countElements);
             Resize();
@@ -248,7 +249,7 @@ namespace List
         {
               int newLength = (int)(Length * 1.33 + 1);
               int[] tmpArray = new int[newLength];
-              for (int i = 0; i < _array.Length; i++)
+              for (int i = 0; i < Length; i++)
               {
                   tmpArray[i] = _array[i];
               }
