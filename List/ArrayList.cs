@@ -147,7 +147,7 @@ namespace List
                 _array[index] = value;
             }
         }
-        public void GetFirstIndex(int value)
+        public int GetFirstIndex(int value)
         {
             int firstIndex = -1;
             for (int i = 0; i < Length; i++)
@@ -158,8 +158,9 @@ namespace List
                     break;
                 }
             }
+            return firstIndex;
         }
-        public void GetReverst(ref int[] _array)
+        public void GetReverst()
         {
             for (int i = 0; i < Length / 2; i++)
             {
@@ -168,29 +169,17 @@ namespace List
                 _array[Length - i - 1] = revers;
             }
         }
-        public void FindMax(int[] _array)
+        public int FindMax()
         {
-            int max = _array[0];
-            for (int i = 1; i < Length; i++)
-            {
-                if (max < _array[i])
-                {
-                    max = _array[i];
-                }
-            }
+            int max = _array[FindIndexMax()];
+            return max;
         }
-        public void FindMin(int[] _array)
+        public int FindMin()
         {
-            int min = _array[0];
-            for (int i = 1; i < Length; i++)
-            {
-                    if (min > _array[i])
-                    {
-                        min = _array[i];
-                    }
-            }
+            int min = _array[FindIndexMin()];
+            return min;
         }
-        public void FindIndexMaxElement(int[] _array)
+        public int FindIndexMax()
         {
             int max = _array[0];
             int maxIndex = 0;
@@ -202,8 +191,9 @@ namespace List
                     maxIndex = i;
                 }
             }
+            return maxIndex;
         }
-        public void FindIndexMinElement(int[] _array)
+        public int FindIndexMin()
         {
             int min = _array[0];
             int minIndex = 0;
@@ -215,6 +205,7 @@ namespace List
                     minIndex = i;
                 }
             }
+            return minIndex;
         }
         public void SortAscending(int[] _array)
         {

@@ -145,12 +145,13 @@ namespace List.Tests
 
         [TestCase(1, 0, 744)]
         [TestCase(2, 4, 650)]
-        [TestCase(3, 4, 962)]
+        [TestCase(3, 4, 331)]
         [TestCase(5, 0, 513)]
 
         public void GetByIndex_WhenIndexPassed_ShouldShowValueByIndex(int mockNumber, int index, int expected)
         {
             ArrayList array = new ArrayList(GetMock(mockNumber));
+
             int actual = array[index];
 
             Assert.AreEqual(expected, actual);
@@ -165,13 +166,105 @@ namespace List.Tests
         public void SetByIndex_WhenIndexPassed_ShouldChangeValueByIndex(int mockNumber, int index, int expected)
         {
             ArrayList actual = new ArrayList(GetMock(mockNumber));
+
             actual[index] = 777;
 
             Assert.AreEqual(expected, actual[index]);
         }
 
 
+        [TestCase(11, 777, -1)]
+        [TestCase(2, 639, 1)]
+        [TestCase(3, 331, 2)]
+        [TestCase(5, 777, -1)]
 
+        public void GetFirstIndex_WhenValuePassed_ShouldFirstIndexByValue(int mockNumber, int value, int expectedIndex)
+        {
+            ArrayList array = new ArrayList(GetMock(mockNumber));
+
+            int actualIndex = array.GetFirstIndex(value);
+
+            Assert.AreEqual(expectedIndex, actualIndex);
+        }
+
+
+        [TestCase(11, 11)]
+        [TestCase(2, 18)]
+        [TestCase(4, 19)]
+        [TestCase(5, 5)]
+
+        public void GetReverst_WhenArrayPassed_ShouldReversArray(int mockNumber, int expectedmockNumber)
+        {
+            ArrayList actual = new ArrayList(GetMock(mockNumber));
+            ArrayList expected = new ArrayList(GetMock(expectedmockNumber));
+
+            actual.GetReverst();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+
+        [TestCase(4, 89)]
+        [TestCase(1, 1000)]
+        [TestCase(2, 936)]
+        [TestCase(3, 962)]
+        [TestCase(5, 513)]
+
+        public void FindMax_WhenArrayList_ShouldMaxValue(int mockNumber, int expected)
+        {
+            ArrayList array = new ArrayList(GetMock(mockNumber));
+
+            int actual = array.FindMax();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+
+        [TestCase(4, 69)]
+        [TestCase(1, 77)]
+        [TestCase(2, 554)]
+        [TestCase(3, 331)]
+        [TestCase(5, 513)]
+
+        public void FindMin_WhenArrayList_ShouldMinValue(int mockNumber, int expected)
+        {
+            ArrayList array = new ArrayList(GetMock(mockNumber));
+
+            int actual = array.FindMin();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+
+        [TestCase(4, 0)]
+        [TestCase(1, 3)]
+        [TestCase(2, 0)]
+        [TestCase(3, 3)]
+        [TestCase(5, 0)]
+
+        public void FindIndexMax_WhenArrayList_ShouldIndexMaxValue(int mockNumber, int expected)
+        {
+            ArrayList array = new ArrayList(GetMock(mockNumber));
+
+            int actual = array.FindIndexMax ();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(4, 1)]
+        [TestCase(1, 6)]
+        [TestCase(2, 2)]
+        [TestCase(3, 2)]
+        [TestCase(5, 0)]
+
+        public void FindIndexMin_WhenArrayList_ShouldIndexMinValue(int mockNumber, int expected)
+        {
+            ArrayList array = new ArrayList(GetMock(mockNumber));
+
+            int actual = array.FindIndexMin();
+
+            Assert.AreEqual(expected, actual);
+        }
 
 
 
@@ -232,6 +325,12 @@ namespace List.Tests
                     break;
                 case 17:
                     result = new int[] { 368, 802, 331, 331 };
+                    break;
+                case 18:
+                    result = new int[] { 650, 639, 554, 639, 936 };
+                    break;
+                case 19:
+                    result = new int[] { 72, 69, 89 };
                     break;
             }
             return result;
