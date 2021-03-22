@@ -267,8 +267,36 @@ namespace List.Tests
         }
 
 
+        [TestCase(1, 77, 6)]
+        [TestCase(2, 639, 1)]
+        [TestCase(3, 331, 2)]
+        [TestCase(4, 70, -1)]
+        [TestCase(5, 513, 0)]
+
+        public void RemoveFirstByValue_WhenValuePassed_ShouldRemoveOneValueAndShowIndex(int mockNumber, int value, int expectedIndex)
+        {
+            ArrayList array = new ArrayList(GetMock(mockNumber));
+
+            int actual = array.RemoveFirstByValue(value);
+
+            Assert.AreEqual(expectedIndex, actual);
+        }
 
 
+        [TestCase(1, 77, 1)]
+        [TestCase(2, 639, 2)]
+        [TestCase(3, 331, 3)]
+        [TestCase(4, 70, 0)]
+        [TestCase(5, 0, 0)]
+
+        public void RemoveAllByValue_WhenValuePassed_ShouldRemoveAllValueAndShowCount(int mockNumber, int value, int expected)
+        {
+            ArrayList array = new ArrayList(GetMock(mockNumber));
+
+            int actual = array.RemoveAllByValue(value);
+
+            Assert.AreEqual(expected, actual);
+        }
         private static int[] GetMock(int number)
         {
             int[] result = new int[0];

@@ -215,13 +215,33 @@ namespace List
         {
 
         }
-        public void RemoveFirstByValue(int value)
+        public int RemoveFirstByValue(int value)
         {
-
+            int indexRemoveValue = -1;
+            for(int i = 0; i < Length; i++)
+            {
+                if(_array[i] == value)
+                {
+                    RemoveByIndex(i);
+                    indexRemoveValue = i;
+                    break;
+                }
+            }
+            return indexRemoveValue;
         }
-        public void RemoveAllByValue(int value)
+        public int RemoveAllByValue(int value)
         {
-
+            int countRemoveValues = 0;
+            for(int i = 0; i < Length; i++)
+            { 
+                if(_array[i] == value)
+                {
+                    RemoveByIndex(i);
+                    --i;
+                    ++countRemoveValues;
+                }
+            }
+            return countRemoveValues;
         }
         public void AddList(int[] arrayList)
         {
