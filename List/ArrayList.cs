@@ -4,9 +4,28 @@ namespace List
 {
     public class ArrayList
     {
-        public int Length { get; private set; }
-
+        private int _length;
         private int[] _array;
+
+        public int Length
+        {
+            get
+            {
+                return _length;
+            }
+            private set
+            {
+                if(value >= 0)
+                {
+                    _length = value;
+                }
+                else
+                {
+                    _length = 0;
+                }
+            }
+        }
+
 
         public ArrayList()
         {

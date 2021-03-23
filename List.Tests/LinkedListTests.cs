@@ -22,80 +22,80 @@ namespace List.Tests
         }
 
 
-        //[TestCase(new int[] { 1, 2, 3 }, new int[] { 777, 1, 2, 3 })]
-        //[TestCase(new int[] { 1 }, new int[] { 777, 1 })]
-        //[TestCase(new int[] { }, new int[] { 777 })]
+        [TestCase(new int[] { 1, 2, 3 }, new int[] { 777, 1, 2, 3 })]
+        [TestCase(new int[] { 1 }, new int[] { 777, 1 })]
+        [TestCase(new int[] { }, new int[] { 777 })]
 
-        //public void AddFirst_WhenValuePassed_ShouldAddValueFirst(int[] a, int[] b)
-        //{
-        //    LinkedList actual = new LinkedList(a);
-        //    LinkedList expected = new LinkedList(b);
+        public void AddFirst_WhenValuePassed_ShouldAddValueFirst(int[] a, int[] b)
+        {
+            LinkedList actual = new LinkedList(a);
+            LinkedList expected = new LinkedList(b);
 
-        //    actual.AddFirst(777);
+            actual.AddFirst(777);
 
-        //    Assert.AreEqual(expected, actual);
-        //}
-
-
-        //[TestCase(new int[] { 1, 2, 3 }, new int[] { 1, 777, 2, 3 })]
-        //[TestCase(new int[] { 1 }, new int[] { 1, 777 })]
-        //[TestCase(new int[] { 0, 12, 67, 38, 1 }, new int[] { 0, 777, 12, 67, 38, 1 })]
-
-        //public void AddByIndex_WhenIndexAndValuePassed_ShouldAddValueByIndex(int[] a, int[] b)
-        //{
-        //    LinkedList actual = new LinkedList(a);
-        //    LinkedList expected = new LinkedList(b);
-
-        //    actual.AddByIndex(1, 777);
-
-        //    Assert.AreEqual(expected, actual);
-        //}
+            Assert.AreEqual(expected, actual);
+        }
 
 
-        //[TestCase(new int[] { 1, 2, 3 }, new int[] { 1, 2 })]
-        //[TestCase(new int[] { 1 }, new int[] { })]
-        //[TestCase(new int[] { 0, 12, 67, 38, 1 }, new int[] { 0, 12, 67, 38 })]
+        [TestCase(new int[] { 1, 2, 3 }, new int[] { 1, 777, 2, 3 })]
+        [TestCase(new int[] { 1 }, new int[] { 1, 777 })]
+        [TestCase(new int[] { 0, 12, 67, 38, 1 }, new int[] { 0, 777, 12, 67, 38, 1 })]
 
-        //public void Remove_WhenNothingPassed_ShouldRemoveOneElementFromEnd(int[] a, int[] b)
-        //{
-        //    LinkedList actual = new LinkedList(a);
-        //    LinkedList expected = new LinkedList(b);
+        public void AddByIndex_WhenIndexAndValuePassed_ShouldAddValueByIndex(int[] a, int[] b)
+        {
+            LinkedList actual = new LinkedList(a);
+            LinkedList expected = new LinkedList(b);
 
-        //    actual.Remove();
+            actual.AddByIndex(1, 777);
 
-        //    Assert.AreEqual(expected, actual);
-        //}
-
-
-        //[TestCase(new int[] { 1, 2, 3 }, new int[] { 2, 3 })]
-        //[TestCase(new int[] { 0, 12, 67, 38, 1 }, new int[] { 12, 67, 38, 1 })]
-        //[TestCase(new int[] { 1 }, new int[] { })]
-
-        //public void RemoveFirst_WhenNothingPassed_ShouldRemoveFirstOneElement(int[] a, int[] b)
-        //{
-        //    LinkedList actual = new LinkedList(a);
-        //    LinkedList expected = new LinkedList(b);
-
-        //    actual.RemoveFirst();
-
-        //    Assert.AreEqual(expected, actual);
-        //}
+            Assert.AreEqual(expected, actual);
+        }
 
 
-        //[TestCase(1, 6)]
-        //[TestCase(2, 7)]
-        //[TestCase(3, 8)]
-        //[TestCase(4, 9)]
+        [TestCase(new int[] { 1, 2, 3 }, new int[] { 1, 2 })]
+        [TestCase(new int[] { 1 }, new int[] { })]
+        [TestCase(new int[] { 0, 12, 67, 38, 1 }, new int[] { 0, 12, 67, 38 })]
 
-        //public void RemoveByIndex_WhenIndexPassed_ShouldRemoveByIndexOneElement(int mockNumber, int expectedMockNumber)
-        //{
-        //    LinkedList actual = new LinkedList(GetMock(mockNumber));
-        //    LinkedList expected = new LinkedList(GetMock(expectedMockNumber));
+        public void Remove_WhenNothingPassed_ShouldRemoveOneElementFromEnd(int[] a, int[] b)
+        {
+            LinkedList actual = new LinkedList(a);
+            LinkedList expected = new LinkedList(b);
 
-        //    actual.RemoveByIndex(2);
+            actual.Remove();
 
-        //    Assert.AreEqual(expected, actual);
-        //}
+            Assert.AreEqual(expected, actual);
+        }
+
+
+        [TestCase(new int[] { 1, 2, 3 }, new int[] { 2, 3 })]
+        [TestCase(new int[] { 0, 12, 67, 38, 1 }, new int[] { 12, 67, 38, 1 })]
+        [TestCase(new int[] { 1 }, new int[] { })]
+
+        public void RemoveFirst_WhenNothingPassed_ShouldRemoveFirstOneElement(int[] a, int[] b)
+        {
+            LinkedList actual = new LinkedList(a);
+            LinkedList expected = new LinkedList(b);
+
+            actual.RemoveFirst();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+
+        [TestCase(1, 6)]
+        [TestCase(2, 7)]
+        [TestCase(3, 8)]
+        [TestCase(4, 9)]
+
+        public void RemoveByIndex_WhenIndexPassed_ShouldRemoveByIndexOneElement(int mockNumber, int expectedMockNumber)
+        {
+            LinkedList actual = new LinkedList(GetMock(mockNumber));
+            LinkedList expected = new LinkedList(GetMock(expectedMockNumber));
+
+            actual.RemoveByIndex(2);
+
+            Assert.AreEqual(expected, actual);
+        }
 
         //[TestCase(1, 10)]
         //[TestCase(2, 11)]

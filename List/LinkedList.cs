@@ -9,7 +9,25 @@ namespace List
         private Node _root;
         private Node _tail;
 
-        public int Length { get; private set; }
+        private int _length;
+        public int Length
+        {
+            get
+            {
+                return _length;
+            }
+            private set
+            {
+                if(value >= 0)
+                {
+                    _length = value;
+                }
+                else if(value < 0)
+                {
+                    _length = 0;
+                }
+            }
+        }
 
         public int this[int index]
         {
@@ -75,22 +93,74 @@ namespace List
         }
         public void Add(int value)
         {
+            if (Length != 0)
+            {
+                _tail.Next = new Node(value);
+                _tail = _tail.Next;
+            }
+            else
+            {
+                _root = new Node(value);
+                _tail = _root;
+            }
+                ++Length;
+        }
+        public void AddFirst(int value)
+        {
             ++Length;
-            _tail.Next = new Node(value);
-            _tail = _tail.Next;
+            Node firstNode = new Node(value);
+            firstNode.Next = _root;
+            _root = firstNode;
+        }
+        public void AddByIndex(int index, int value)
+        {
+            if (index != 0)
+            {
+                Node current = _root;
+                for (int i = 1; i < index; i++)
+                {
+                    current = current.Next;
+                }
+                Node insertNode = new Node(value);
+
+                insertNode.Next = current.Next;
+                current.Next = insertNode;
+            }
+            else
+            {
+                AddFirst(value);
+            }
+            ++Length;
+        }
+        public void Remove()
+        {
+            if (Length > 1)
+            {
+                --Length;
+                Node current = GetNodeByIndex(Length - 1);
+                _tail = current;
+            }
+            else
+            {
+                RemoveFirst();
+            }
         }
         public void RemoveFirst()
         {
-            _root = _root.Next;
+            --Length;
+            if (Length > 1)
+            {
+                _root = _root.Next;
+            }
+            else
+            {
+                _root = null;
+                _tail = null;
+            }
         }
         public void RemoveByIndex(int index)
         {
-            Node current = _root;
-
-            for(int i = 1; i < index; i++)
-            {
-                current = current.Next;
-            }
+            Node current = GetNodeByIndex(index - 1);
             current.Next = current.Next.Next;
             --Length;
         }
@@ -140,17 +210,23 @@ namespace List
             }
             Node currentThis = _root;
             Node currentList = list._root;
-
-            do
+            if (currentThis is null && currentList is null)
             {
-                if (currentThis.Value != currentList.Value)
-                {
-                    return false;
-                }
-                currentThis = currentThis.Next;
-                currentList = currentList.Next;
+                return true;
             }
-            while (!(currentThis.Next is null));
+                do
+                {
+                    if (currentThis.Value != currentList.Value)
+                    {
+                        return false;
+                    }
+                    if (Length > 1)
+                    {
+                        currentThis = currentThis.Next;
+                        currentList = currentList.Next;
+                    }
+                }
+                while (!(currentThis.Next is null));
             return true;
         }
     }
