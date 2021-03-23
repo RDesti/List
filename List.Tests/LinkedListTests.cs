@@ -70,6 +70,8 @@ namespace List.Tests
         [TestCase(new int[] { 1, 2, 3 }, new int[] { 2, 3 })]
         [TestCase(new int[] { 0, 12, 67, 38, 1 }, new int[] { 12, 67, 38, 1 })]
         [TestCase(new int[] { 1 }, new int[] { })]
+        [TestCase(new int[] { }, new int[] { })]
+
 
         public void RemoveFirst_WhenNothingPassed_ShouldRemoveFirstOneElement(int[] a, int[] b)
         {
@@ -87,6 +89,7 @@ namespace List.Tests
         [TestCase(3, 8)]
         [TestCase(4, 9)]
 
+
         public void RemoveByIndex_WhenIndexPassed_ShouldRemoveByIndexOneElement(int mockNumber, int expectedMockNumber)
         {
             LinkedList actual = new LinkedList(GetMock(mockNumber));
@@ -97,177 +100,181 @@ namespace List.Tests
             Assert.AreEqual(expected, actual);
         }
 
-        //[TestCase(1, 10)]
-        //[TestCase(2, 11)]
-        //[TestCase(3, 12)]
-        //[TestCase(4, 11)]
-        //[TestCase(5, 11)]
-
-        //public void Remove_WhenCountElementsPassed_ShouldRemoveCountElement(int mockNumber, int expectedMockNumber)
-        //{
-        //    LinkedList actual = new LinkedList(GetMock(mockNumber));
-        //    LinkedList expected = new LinkedList(GetMock(expectedMockNumber));
-
-        //    actual.Remove(5);
-
-        //    Assert.AreEqual(expected, actual);
-        //}
+        [TestCase(1, 10)]
+        [TestCase(2, 11)]
+        [TestCase(3, 12)]
+        [TestCase(4, 11)]
+        [TestCase(5, 11)]
+        [TestCase(11, 11)]
 
 
-        //[TestCase(1, 13)]
-        //[TestCase(2, 11)]
-        //[TestCase(3, 14)]
-        //[TestCase(4, 11)]
-        //[TestCase(5, 11)]
+        public void Remove_WhenCountElementsPassed_ShouldRemoveCountElement(int mockNumber, int expectedMockNumber)
+        {
+            LinkedList actual = new LinkedList(GetMock(mockNumber));
+            LinkedList expected = new LinkedList(GetMock(expectedMockNumber));
 
-        //public void RemoveFirst_WhenCountElementsPassed_ShouldRemoveFirstCountElement(int mockNumber, int expectedMockNumber)
-        //{
-        //    LinkedList actual = new LinkedList(GetMock(mockNumber));
-        //    LinkedList expected = new LinkedList(GetMock(expectedMockNumber));
+            actual.Remove(5);
 
-        //    actual.RemoveFirst(5);
-
-        //    Assert.AreEqual(expected, actual);
-        //}
+            Assert.AreEqual(expected, actual);
+        }
 
 
-        //[TestCase(1, 15)]
-        //[TestCase(2, 16)]
-        //[TestCase(3, 17)]
-
-        //public void RemoveByIndex_WhenIndexPassed_ShouldRemoveCountElementByIndex(int mockNumber, int expectedMockNumber)
-        //{
-        //    LinkedList actual = new LinkedList(GetMock(mockNumber));
-        //    LinkedList expected = new LinkedList(GetMock(expectedMockNumber));
-
-        //    actual.RemoveByIndex(3, 4);
-
-        //    Assert.AreEqual(expected, actual);
-        //}
+        [TestCase(1, 13)]
+        [TestCase(2, 11)]
+        [TestCase(3, 14)]
+        [TestCase(4, 11)]
+        [TestCase(5, 11)]
+        [TestCase(11, 11)]
 
 
-        //[TestCase(1, 0, 744)]
-        //[TestCase(2, 4, 650)]
-        //[TestCase(3, 4, 331)]
-        //[TestCase(5, 0, 513)]
+        public void RemoveFirst_WhenCountElementsPassed_ShouldRemoveFirstCountElement(int mockNumber, int expectedMockNumber)
+        {
+            LinkedList actual = new LinkedList(GetMock(mockNumber));
+            LinkedList expected = new LinkedList(GetMock(expectedMockNumber));
 
-        //public void GetByIndex_WhenIndexPassed_ShouldShowValueByIndex(int mockNumber, int index, int expected)
-        //{
-        //   LinkedList array = new LinkedList(GetMock(mockNumber));
+            actual.RemoveFirst(5);
 
-        //    int actual = array[index];
-
-        //    Assert.AreEqual(expected, actual);
-        //}
+            Assert.AreEqual(expected, actual);
+        }
 
 
-        //[TestCase(11, 0, 777)]
-        //[TestCase(2, 4, 777)]
-        //[TestCase(3, 4, 777)]
-        //[TestCase(5, 0, 777)]
+        [TestCase(1, 15)]
+        [TestCase(2, 16)]
+        [TestCase(11, 11)]
+        [TestCase(3, 17)]
 
-        //public void SetByIndex_WhenIndexPassed_ShouldChangeValueByIndex(int mockNumber, int index, int expected)
-        //{
-        //    LinkedList actual = new LinkedList(GetMock(mockNumber));
+        public void RemoveByIndex_WhenIndexPassed_ShouldRemoveCountElementByIndex(int mockNumber, int expectedMockNumber)
+        {
+            LinkedList actual = new LinkedList(GetMock(mockNumber));
+            LinkedList expected = new LinkedList(GetMock(expectedMockNumber));
 
-        //    actual[index] = 777;
+            actual.RemoveByIndex(3, 4);
 
-        //    Assert.AreEqual(expected, actual[index]);
-        //}
-
-
-        //[TestCase(11, 777, -1)]
-        //[TestCase(2, 639, 1)]
-        //[TestCase(3, 331, 2)]
-        //[TestCase(5, 777, -1)]
-
-        //public void GetFirstIndex_WhenValuePassed_ShouldFirstIndexByValue(int mockNumber, int value, int expectedIndex)
-        //{
-        //    LinkedList array = new LinkedList(GetMock(mockNumber));
-
-        //    int actualIndex = array.GetFirstIndex(value);
-
-        //    Assert.AreEqual(expectedIndex, actualIndex);
-        //}
+            Assert.AreEqual(expected, actual);
+        }
 
 
-        //[TestCase(11, 11)]
-        //[TestCase(2, 18)]
-        //[TestCase(4, 19)]
-        //[TestCase(5, 5)]
+        [TestCase(1, 0, 744)]
+        [TestCase(2, 4, 650)]
+        [TestCase(3, 4, 331)]
+        [TestCase(5, 0, 513)]
 
-        //public void GetReverst_WhenArrayPassed_ShouldReversArray(int mockNumber, int expectedmockNumber)
-        //{
-        //    LinkedList actual = new LinkedList(GetMock(mockNumber));
-        //    LinkedList expected = new LinkedList(GetMock(expectedmockNumber));
+        public void GetByIndex_WhenIndexPassed_ShouldShowValueByIndex(int mockNumber, int index, int expected)
+        {
+            LinkedList array = new LinkedList(GetMock(mockNumber));
 
-        //    actual.GetReverst();
+            int actual = array[index];
 
-        //    Assert.AreEqual(expected, actual);
-        //}
-
-
-        //[TestCase(4, 89)]
-        //[TestCase(1, 1000)]
-        //[TestCase(2, 936)]
-        //[TestCase(3, 962)]
-        //[TestCase(5, 513)]
-
-        //public void FindMax_WhenArrayList_ShouldMaxValue(int mockNumber, int expected)
-        //{
-        //    LinkedList array = new LinkedList(GetMock(mockNumber));
-
-        //    int actual = array.FindMax();
-
-        //    Assert.AreEqual(expected, actual);
-        //}
+            Assert.AreEqual(expected, actual);
+        }
 
 
-        //[TestCase(4, 69)]
-        //[TestCase(1, 77)]
-        //[TestCase(2, 554)]
-        //[TestCase(3, 331)]
-        //[TestCase(5, 513)]
+        [TestCase(2, 4, 777)]
+        [TestCase(3, 4, 777)]
+        [TestCase(5, 0, 777)]
 
-        //public void FindMin_WhenArrayList_ShouldMinValue(int mockNumber, int expected)
-        //{
-        //    LinkedList array = new LinkedList(GetMock(mockNumber));
+        public void SetByIndex_WhenIndexPassed_ShouldChangeValueByIndex(int mockNumber, int index, int expected)
+        {
+            LinkedList actual = new LinkedList(GetMock(mockNumber));
 
-        //    int actual = array.FindMin();
+            actual[index] = 777;
 
-        //    Assert.AreEqual(expected, actual);
-        //}
+            Assert.AreEqual(expected, actual[index]);
+        }
 
 
-        //[TestCase(4, 0)]
-        //[TestCase(1, 3)]
-        //[TestCase(2, 0)]
-        //[TestCase(3, 3)]
-        //[TestCase(5, 0)]
+        [TestCase(11, 777, -1)]
+        [TestCase(2, 639, 1)]
+        [TestCase(3, 331, 2)]
+        [TestCase(5, 777, -1)]
 
-        //public void FindIndexMax_WhenArrayList_ShouldIndexMaxValue(int mockNumber, int expected)
-        //{
-        //    LinkedList array = new LinkedList(GetMock(mockNumber));
+        public void GetFirstIndex_WhenValuePassed_ShouldFirstIndexByValue(int mockNumber, int value, int expectedIndex)
+        {
+            LinkedList array = new LinkedList(GetMock(mockNumber));
 
-        //    int actual = array.FindIndexMax();
+            int actualIndex = array.GetFirstIndex(value);
 
-        //    Assert.AreEqual(expected, actual);
-        //}
+            Assert.AreEqual(expectedIndex, actualIndex);
+        }
 
-        //[TestCase(4, 1)]
-        //[TestCase(1, 6)]
-        //[TestCase(2, 2)]
-        //[TestCase(3, 2)]
-        //[TestCase(5, 0)]
 
-        //public void FindIndexMin_WhenArrayList_ShouldIndexMinValue(int mockNumber, int expected)
-        //{
-        //    LinkedList array = new LinkedList(GetMock(mockNumber));
+        [TestCase(11, 11)]
+        [TestCase(2, 18)]
+        [TestCase(4, 19)]
+        [TestCase(5, 5)]
 
-        //    int actual = array.FindIndexMin();
+        public void GetReverst_WhenArrayPassed_ShouldReversArray(int mockNumber, int expectedmockNumber)
+        {
+            LinkedList actual = new LinkedList(GetMock(mockNumber));
+            LinkedList expected = new LinkedList(GetMock(expectedmockNumber));
 
-        //    Assert.AreEqual(expected, actual);
-        //}
+            actual.GetReverst();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+
+        [TestCase(4, 89)]
+        [TestCase(1, 1000)]
+        [TestCase(2, 936)]
+        [TestCase(3, 962)]
+        [TestCase(5, 513)]
+
+        public void FindMax_WhenArrayList_ShouldMaxValue(int mockNumber, int expected)
+        {
+            LinkedList array = new LinkedList(GetMock(mockNumber));
+
+            int actual = array.FindMax();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+
+        [TestCase(4, 69)]
+        [TestCase(1, 77)]
+        [TestCase(2, 554)]
+        [TestCase(3, 331)]
+        [TestCase(5, 513)]
+
+        public void FindMin_WhenArrayList_ShouldMinValue(int mockNumber, int expected)
+        {
+            LinkedList array = new LinkedList(GetMock(mockNumber));
+
+            int actual = array.FindMin();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+
+        [TestCase(4, 0)]
+        [TestCase(1, 3)]
+        [TestCase(2, 0)]
+        [TestCase(3, 3)]
+        [TestCase(5, 0)]
+
+        public void FindIndexMax_WhenArrayList_ShouldIndexMaxValue(int mockNumber, int expected)
+        {
+            LinkedList array = new LinkedList(GetMock(mockNumber));
+
+            int actual = array.FindIndexMax();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(4, 1)]
+        [TestCase(1, 6)]
+        [TestCase(2, 2)]
+        [TestCase(3, 2)]
+        [TestCase(5, 0)]
+
+        public void FindIndexMin_WhenArrayList_ShouldIndexMinValue(int mockNumber, int expected)
+        {
+            LinkedList array = new LinkedList(GetMock(mockNumber));
+
+            int actual = array.FindIndexMin();
+
+            Assert.AreEqual(expected, actual);
+        }
 
 
         //[TestCase(1, 77, 6)]

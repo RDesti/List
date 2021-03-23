@@ -33,29 +33,39 @@ namespace List
         {
             get
             {
+                Node current;
                 if (index > 0 && index < Length)
                 {
-                    Node current = GetNodeByIndex(index);
+                    current = GetNodeByIndex(index);
 
-                    return current.Value;
+                }
+                else if(index == 0)
+                {
+                    current = _root;
                 }
                 else
                 {
                     throw new IndexOutOfRangeException();
                 }
+                return current.Value;
             }
             set
             {
+                Node current = _root;
                 if (index > 0 && index < Length)
                 {
-                    Node current = GetNodeByIndex(index);
+                    current = GetNodeByIndex(index);
 
-                    current.Value = value;
+                }
+                else if(index == 0)
+                {
+                    current = _root;
                 }
                 else
                 {
                     throw new IndexOutOfRangeException();
                 }
+                current.Value = value;
             }
         }
 
@@ -164,22 +174,160 @@ namespace List
             current.Next = current.Next.Next;
             --Length;
         }
+        public void Remove(int countElements)
+        {
+            if(Length > countElements)
+            {
+                Length -= countElements;
+                Node current = GetNodeByIndex(Length-1);
+                _tail = current;
+            }
+            else
+            {
+                Length = 0;
+                _tail = null;
+                _root = null;
+            }
+        }
+        public void RemoveFirst(int countElements)
+        {
+            if (Length > countElements)
+            {
+                Node current = GetNodeByIndex(countElements);
+                _root = current;
+                Length -= countElements;
+            }
+            else
+            {
+                Length = 0;
+                _tail = null;
+                _root = null;
+            }
+        }
+        public void RemoveByIndex(int index, int countElements)
+        {
+            if (Length > countElements)
+            {
+                Node tmpNode;
+                if (index + countElements + 1 > Length)
+                {
+                    tmpNode = GetNodeByIndex(Length - 1);
+                }
+                else
+                {
+                    tmpNode = GetNodeByIndex(index + countElements - 1);
+                }
+                Node current = GetNodeByIndex(index - 1);
+                current.Next = tmpNode.Next;
+                if (Length < index + countElements)
+                {
+                    Length -= index + countElements - Length;
+                }
+                else
+                {
+                    Length -= countElements;
+                }
+            }
+            else
+            {
+                Length = 0;
+                _tail = null;
+                _root = null;
+            }
+        }
+        public int GetFirstIndex(int value)
+            {
+                int firstIndex = -1;
+                Node current = _root;
+                for (int i = 0; i < Length; i++)
+                {
+                    if(current.Value == value)
+                    {
+                        firstIndex = i;
+                        break;
+                    }
+                current = current.Next;
+                }
+                return firstIndex;
+            }
+        public void GetReverst()
+        {
+            Node current = _root;
+            Node prev = null;
+            Node next;
+            while(!(current is null))
+            {
+                next = current.Next;
+                current.Next = prev;
+                prev = current;
+                current = next;
+            }
+            _root = prev;
+        }
+        public int FindMax()
+        {
+            Node current = GetNodeByIndex(FindIndexMax());
+            int max = current.Value;
+            return max;
+        }
+        public int FindMin()
+        {
+            Node current = GetNodeByIndex(FindIndexMin());
+            int min = current.Value;
+            return min;
+        }
+        public int FindIndexMax()
+        {
+            Node current = _root;
+            int indexMax = 0;
+            int max = current.Value;
+            for(int i = 0; i < Length; i++)
+            {
+                if(current.Value > max)
+                {
+                    max = current.Value;
+                    indexMax = i;
+                }
+                current = current.Next;
+            }
+            return indexMax;
+        }
+        public int FindIndexMin()
+        {
+            Node current = _root;
+            int indexMin = 0;
+            int min = current.Value;
+            for(int i = 0; i < Length; i++)
+            {
+                if(current.Value < min)
+                {
+                    min = current.Value;
+                    indexMin = i;
+                }
+                current = current.Next;
+            }
+            return indexMin;
+        }
 
         private Node GetNodeByIndex(int index)
         {
+             Node current = _root;
             if (index > 0 && index < Length)
             {
-                Node current = _root;
                 for (int i = 1; i <= index; i++)
                 {
                     current = current.Next;
                 }
-                return current;
+            }
+            else if(index == 0)
+            {
+                current = _root;
             }
             else
             {
                 throw new IndexOutOfRangeException();
             }
+                return current;
         }
         public override string ToString()
         {
