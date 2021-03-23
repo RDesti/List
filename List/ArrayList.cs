@@ -17,6 +17,7 @@ namespace List
         public ArrayList(int value)
         {
             Length = 1;
+
             _array = new int[10];
             _array[0] = value;
         }
@@ -40,13 +41,13 @@ namespace List
         }
         public void AddFirst(int value)
         {
-            ++Length;
             if (Length >= _array.Length)
             {
                 Resize();
             }
             MoveRightToIndex(0, 1);
             _array[0] = value;
+            ++Length;
         }
         public void AddByIndex(int index, int value)
         {
@@ -54,13 +55,13 @@ namespace List
             {
                 throw new IndexOutOfRangeException("Sorry, but you are accessing a non-existent index");
             }
-            ++Length;
             if (Length >= _array.Length)
             {
                 Resize();
             }
             MoveRightToIndex(index, 1);
             _array[index] = value;
+            ++Length;
         }
         public void Remove()
         {
@@ -245,33 +246,62 @@ namespace List
         }
         public void AddList(int[] arrayList)
         {
-
+            int lastIndex = Length-1;
+            AddListByIndex(arrayList, lastIndex);
         }
         public void AddListFirst(int[] arrayList)
         {
-
+            int firstIndex = 0;
+            AddListByIndex(arrayList, firstIndex);
         }
-        public void AddListByIndex(int[] arrayList)
+        public void AddListByIndex(int[] arrayList, int index)
         {
-
+            if (index < 0 || index > Length)
+            {
+                throw new IndexOutOfRangeException("Sorry, but you are accessing a non-existent index");
+            }
+            int countElement = arrayList.Length;
+            Length += countElement;
+            if(Length >= _array.Length)
+            {
+                Resize();
+            }
+            MoveRightToIndex(index, countElement);
+            int lengthInsert = index + countElement;
+            int j = 0;
+            for (int i = index; i < lengthInsert; i++)
+            {
+                _array[i] = arrayList[j];
+                j++;
+            }
         }
 
         private void Resize()
         {
-              int newLength = (int)(Length * 1.33 + 1);
-              int[] tmpArray = new int[newLength];
-              for (int i = 0; i < Length; i++)
-              {
-                  tmpArray[i] = _array[i];
-              }
-              _array = tmpArray;
+            int size = _array.Length;
+            if (Length < _array.Length)
+            {
+                size = Length;
+            } 
+            int newLength = (int)(Length * 1.33 + 1);
+            int[] tmpArray = new int[newLength];
+            for (int i = 0; i < size; i++)
+            {
+                tmpArray[i] = _array[i];
+            }
+            _array = tmpArray;
         }
         private void MoveRightToIndex(int index, int count)
         {
-              for (int i = Length - 1; i >= index; i--)
-              {
+            int shift = Length - 1;
+            if(Length == 0)
+            {
+                shift = 0;
+            }
+            for (int i = shift; i >= index; i--)
+            {
                   _array[i + count] = _array[i];
-              }
+            }
         }
         private void MoveLeftToIndex(int index, int count)
         {

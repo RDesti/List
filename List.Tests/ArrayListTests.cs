@@ -246,7 +246,7 @@ namespace List.Tests
         {
             ArrayList array = new ArrayList(GetMock(mockNumber));
 
-            int actual = array.FindIndexMax ();
+            int actual = array.FindIndexMax();
 
             Assert.AreEqual(expected, actual);
         }
@@ -297,6 +297,24 @@ namespace List.Tests
 
             Assert.AreEqual(expected, actual);
         }
+
+
+        [TestCase(2, new int[] { 7, 7, 7 }, 21)]
+        [TestCase(3, new int[] { 7, 7, 7 }, 22)]
+        [TestCase(5, new int[] { 7, 7, 7 }, 23)]
+
+        public void AddList_WhenArrayListPassed_ShouldAddListInEnd(int mockNumber1, int[] arrayList, int expectedMockNumber)
+        {
+            ArrayList actual = new ArrayList(GetMock(mockNumber1));
+            ArrayList expected = new ArrayList(GetMock(expectedMockNumber));
+
+            actual.AddList(arrayList);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+
+     
         private static int[] GetMock(int number)
         {
             int[] result = new int[0];
@@ -360,6 +378,22 @@ namespace List.Tests
                 case 19:
                     result = new int[] { 72, 69, 89 };
                     break;
+                case 20:
+                    result = new int[] { 7, 7, 7};
+                    break;
+                case 21:
+                    result = new int[] { 936, 639, 554, 639, 650, 7, 7, 7 };
+                    break;
+                case 22:
+                    result = new int[] { 368, 802, 331, 962, 331, 782, 392, 331, 7, 7, 7 };
+                    break;
+                case 23:
+                    result = new int[] { 513, 7, 7, 7 };
+                    break;
+                case 24:
+                    result = new int[] {  };
+                    break;
+
             }
             return result;
         }
