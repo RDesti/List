@@ -17,30 +17,37 @@ namespace List
         public ArrayList(int value)
         {
             Length = 1;
+
             _array = new int[10];
             _array[0] = value;
         }
         public ArrayList(int[] initialArray)
         {
-            Length = 0;
+            Length = initialArray.Length;
             _array = new int[(int)(Length * 1.33 + 1)];
-            for (int i = 0; i < initialArray.Length; i++)
+            for (int i = 0; i < Length; i++)
             {
-                Add(initialArray[i]);
+                _array[i] = initialArray[i];
             }
         }
         public void Add(int value)
         {
-            Resize();
+            if (Length >= _array.Length)
+            {
+                Resize(); 
+            }
             _array[Length] = value;
             ++Length;
         }
-        public void AddInFront(int value)
+        public void AddFirst(int value)
         {
-            ++Length;
-            Resize();
+            if (Length >= _array.Length)
+            {
+                Resize();
+            }
             MoveRightToIndex(0, 1);
             _array[0] = value;
+            ++Length;
         }
         public void AddByIndex(int index, int value)
         {
@@ -48,20 +55,24 @@ namespace List
             {
                 throw new IndexOutOfRangeException("Sorry, but you are accessing a non-existent index");
             }
-            ++Length;
-            Resize();
+            if (Length >= _array.Length)
+            {
+                Resize();
+            }
             MoveRightToIndex(index, 1);
             _array[index] = value;
+            ++Length;
         }
         public void Remove()
         {
             --Length;
             Resize();
         }
-        public void RemoveInFront()
+        public void RemoveFirst()
         {
             --Length;
-            MoveLeftToIndex(0, 1);
+            int nullIndex = 0;
+            MoveLeftToIndex(nullIndex, 1);
             Resize();
         }
         public void RemoveByIndex(int index)
@@ -76,13 +87,28 @@ namespace List
         }
         public void Remove(int countElements)
         {
-            Length -= countElements;
+            if (Length > countElements)
+            {
+                Length -= countElements;
+            }
+            else
+            {
+                Length -= Length;
+            }
             Resize();
         }
-        public void RemoveInFront(int countElements)
+        public void RemoveFirst(int countElements)
         {
-            Length -= countElements;
-            MoveLeftToIndex(0, countElements);
+            if (Length > countElements)
+            {
+                Length -= countElements;
+            }
+            else
+            {
+                Length -= Length;
+            }
+            int nullIndex = 0;
+            MoveLeftToIndex(nullIndex, countElements);
             Resize();
         }
         public void RemoveByIndex(int index, int countElements)
@@ -91,26 +117,38 @@ namespace List
             {
                 throw new IndexOutOfRangeException("Sorry, but you are accessing a non-existent index");
             }
-            Length -= countElements;
+            int remainingElements = Length - index;
+            if (remainingElements > countElements)
+            {
+                Length -= countElements;
+            }
+            else
+            {
+                Length -= remainingElements;
+            }
             MoveLeftToIndex(index, countElements);
             Resize();
-        }
-        public void ReturnCurrentLength(int Length)
-        {
-            int currentListLength = _array.Length;
         }
         public int this[int index]
         {
             get
             {
+                if(index > Length || index < 0)
+                {
+                    throw new IndexOutOfRangeException("Sorry, but you are accessing a non-existent index");
+                }
                 return _array[index];
             }
             set
             {
+                if (index > Length || index < 0)
+                {
+                    throw new IndexOutOfRangeException("Sorry, but you are accessing a non-existent index");
+                }
                 _array[index] = value;
             }
         }
-        public void GetFirstIndex(int value)
+        public int GetFirstIndex(int value)
         {
             int firstIndex = -1;
             for (int i = 0; i < Length; i++)
@@ -118,18 +156,12 @@ namespace List
                 if (_array[i] == value)
                 {
                     firstIndex = i;
+                    break;
                 }
             }
+            return firstIndex;
         }
-        public void Change(int index, int value)
-        {
-            if (index < 0 || index > Length)
-            {
-                throw new IndexOutOfRangeException("Sorry, but you are accessing a non-existent index");
-            }
-            _array[index] = value;
-        }
-        public void GetReverst(ref int[] _array)
+        public void GetReverst()
         {
             for (int i = 0; i < Length / 2; i++)
             {
@@ -138,29 +170,17 @@ namespace List
                 _array[Length - i - 1] = revers;
             }
         }
-        public void FindMax(int[] _array)
+        public int FindMax()
         {
-            int max = _array[0];
-            for (int i = 1; i < Length; i++)
-            {
-                if (max < _array[i])
-                {
-                    max = _array[i];
-                }
-            }
+            int max = _array[FindIndexMax()];
+            return max;
         }
-        public void FindMin(int[] _array)
+        public int FindMin()
         {
-            int min = _array[0];
-            for (int i = 1; i < Length; i++)
-            {
-                    if (min > _array[i])
-                    {
-                        min = _array[i];
-                    }
-            }
+            int min = _array[FindIndexMin()];
+            return min;
         }
-        public void FindIndexMaxElement(int[] _array)
+        public int FindIndexMax()
         {
             int max = _array[0];
             int maxIndex = 0;
@@ -172,8 +192,9 @@ namespace List
                     maxIndex = i;
                 }
             }
+            return maxIndex;
         }
-        public void FindIndexMinElement(int[] _array)
+        public int FindIndexMin()
         {
             int min = _array[0];
             int minIndex = 0;
@@ -185,6 +206,7 @@ namespace List
                     minIndex = i;
                 }
             }
+            return minIndex;
         }
         public void SortAscending(int[] _array)
         {
@@ -194,26 +216,92 @@ namespace List
         {
 
         }
-
-
-
+        public int RemoveFirstByValue(int value)
+        {
+            int indexRemoveValue = -1;
+            for(int i = 0; i < Length; i++)
+            {
+                if(_array[i] == value)
+                {
+                    RemoveByIndex(i);
+                    indexRemoveValue = i;
+                    break;
+                }
+            }
+            return indexRemoveValue;
+        }
+        public int RemoveAllByValue(int value)
+        {
+            int countRemoveValues = 0;
+            for(int i = 0; i < Length; i++)
+            { 
+                if(_array[i] == value)
+                {
+                    RemoveByIndex(i);
+                    --i;
+                    ++countRemoveValues;
+                }
+            }
+            return countRemoveValues;
+        }
+        public void AddList(int[] arrayList)
+        {
+            int lastIndex = Length-1;
+            AddListByIndex(arrayList, lastIndex);
+        }
+        public void AddListFirst(int[] arrayList)
+        {
+            int firstIndex = 0;
+            AddListByIndex(arrayList, firstIndex);
+        }
+        public void AddListByIndex(int[] arrayList, int index)
+        {
+            if (index < 0 || index > Length)
+            {
+                throw new IndexOutOfRangeException("Sorry, but you are accessing a non-existent index");
+            }
+            int countElement = arrayList.Length;
+            Length += countElement;
+            if(Length >= _array.Length)
+            {
+                Resize();
+            }
+            MoveRightToIndex(index, countElement);
+            int lengthInsert = index + countElement;
+            int j = 0;
+            for (int i = index; i < lengthInsert; i++)
+            {
+                _array[i] = arrayList[j];
+                j++;
+            }
+        }
 
         private void Resize()
         {
-              int newLength = (int)(Length * 1.33 + 1);
-              int[] tmpArray = new int[newLength];
-              for (int i = 0; i < _array.Length; i++)
-              {
-                  tmpArray[i] = _array[i];
-              }
-              _array = tmpArray;
+            int size = _array.Length;
+            if (Length < _array.Length)
+            {
+                size = Length;
+            } 
+            int newLength = (int)(Length * 1.33 + 1);
+            int[] tmpArray = new int[newLength];
+            for (int i = 0; i < size; i++)
+            {
+                tmpArray[i] = _array[i];
+            }
+            _array = tmpArray;
         }
         private void MoveRightToIndex(int index, int count)
         {
-              for (int i = Length - 1; i >= index; i--)
-              {
+            int shift = Length - 1;
+            if(Length == 0)
+            {
+                shift = 0;
+            }
+            for (int i = shift; i >= index; i--)
+            {
                   _array[i + count] = _array[i];
-              }
+            }
         }
         private void MoveLeftToIndex(int index, int count)
         {
