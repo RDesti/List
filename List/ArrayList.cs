@@ -96,7 +96,7 @@ namespace List
         }
         public void RemoveByIndex(int index)
         {
-            if (index < 0 || index > Length)
+            if (index < 0 || index >= Length)
             {
                 throw new IndexOutOfRangeException("Sorry, but you are accessing a non-existent index");
             }
@@ -106,7 +106,11 @@ namespace List
         }
         public void Remove(int countElements)
         {
-            if (Length > countElements)
+            if(countElements < 0)
+            {
+                throw new ArgumentException("Incorrect count of elements");
+            }
+            else if (Length > countElements)
             {
                 Length -= countElements;
             }
@@ -118,7 +122,11 @@ namespace List
         }
         public void RemoveFirst(int countElements)
         {
-            if (Length > countElements)
+            if (countElements < 0)
+            {
+                throw new ArgumentException("Incorrect count of elements");
+            }
+            else if (Length > countElements)
             {
                 Length -= countElements;
             }
@@ -132,9 +140,13 @@ namespace List
         }
         public void RemoveByIndex(int index, int countElements)
         {
-            if (index < 0 || index > Length)
+            if (index < 0 || index >= Length)
             {
                 throw new IndexOutOfRangeException("Sorry, but you are accessing a non-existent index");
+            }
+            else if(countElements < 0)
+            {
+                throw new ArgumentException("Incorrect count of elements");
             }
             int remainingElements = Length - index;
             if (remainingElements > countElements)
@@ -265,15 +277,15 @@ namespace List
         }
         public void AddList(int[] arrayList)
         {
-            int lastIndex = Length-1;
-            AddListByIndex(arrayList, lastIndex);
+            int lastIndex = Length;
+            AddListByIndex( lastIndex, arrayList);
         }
         public void AddListFirst(int[] arrayList)
         {
             int firstIndex = 0;
-            AddListByIndex(arrayList, firstIndex);
+            AddListByIndex( firstIndex, arrayList);
         }
-        public void AddListByIndex(int[] arrayList, int index)
+        public void AddListByIndex( int index, int[] arrayList)
         {
             if (index < 0 || index > Length)
             {
@@ -285,20 +297,29 @@ namespace List
             {
                 Resize();
             }
-            MoveRightToIndex(index, countElement);
+            for(int i = Length-1; i >= index; i--)
+            {
+                if (i - countElement >= 0)
+                {
+                    _array[i] = _array[i - countElement];
+                }
+            }
             int lengthInsert = index + countElement;
             int j = 0;
             for (int i = index; i < lengthInsert; i++)
             {
-                _array[i] = arrayList[j];
-                j++;
+                if (j < countElement)
+                {
+                    _array[i] = arrayList[j];
+                    j++;
+                }
             }
         }
 
         private void Resize()
         {
             int size = _array.Length;
-            if (Length < _array.Length)
+            if (Length <= _array.Length)
             {
                 size = Length;
             } 
@@ -312,14 +333,9 @@ namespace List
         }
         private void MoveRightToIndex(int index, int count)
         {
-            int shift = Length - 1;
-            if(Length == 0)
+            for (int i = Length; i > index; i--)
             {
-                shift = 0;
-            }
-            for (int i = shift; i >= index; i--)
-            {
-                  _array[i + count] = _array[i];
+                  _array[i] = _array[i - count];
             }
         }
         private void MoveLeftToIndex(int index, int count)

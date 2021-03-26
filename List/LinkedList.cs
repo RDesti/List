@@ -308,26 +308,82 @@ namespace List
             }
             return indexMin;
         }
-
-        private Node GetNodeByIndex(int index)
+        public int RemoveFirstByValue(int value)
         {
-             Node current = _root;
-            if (index > 0 && index < Length)
+            int indexRemoveValue = -1;
+            Node current = _root;
+            if (current.Value == value)
             {
-                for (int i = 1; i <= index; i++)
+                RemoveFirst();
+                indexRemoveValue = 0;
+            }
+            else
+            {
+                for (int i = 0; i < Length; i++)
                 {
+                    if (current.Value == value)
+                    {
+                        RemoveByIndex(i);
+                        indexRemoveValue = i;
+                        break;
+                    }
                     current = current.Next;
                 }
             }
-            else if(index == 0)
+            return indexRemoveValue;
+        }
+        public int RemoveAllByValue(int value)
+        {
+            int countRemoveValues = 0;
+            Node current = _root;
+            for(int i = 0; i < Length; i++)
             {
-                current = _root;
+                if(current.Value == value)
+                {
+                    RemoveByIndex(i);
+                    --i;
+                    ++countRemoveValues;
+                }
+                current = current.Next;
+            }
+            return countRemoveValues;
+        }
+        public void AddList(int[] list)
+        {
+
+        }
+        public void AddListFirst(int[] list)
+        {
+
+        }
+        public void AddListByIndex(int[] list, int index)
+        {
+
+        }
+        public void SortAscending()
+        {
+
+        }
+        public void SortDescending()
+        {
+
+        }
+
+        private Node GetNodeByIndex(int index)
+        {
+            if (index >= 0 && index < Length)
+            {
+                Node current = _root;
+                    for (int i = 1; i <= index; i++)
+                    {
+                        current = current.Next;
+                    }
+                return current;
             }
             else
             {
                 throw new IndexOutOfRangeException();
             }
-                return current;
         }
         public override string ToString()
         {

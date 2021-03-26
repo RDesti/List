@@ -33,17 +33,17 @@ namespace List.Tests
             Assert.AreEqual(expected, actual);
         }
 
+        [TestCase(new int[] { 1, 2, 3 }, 3, new int[] { 1, 2, 3, 777 })]
+        [TestCase(new int[] { 1, 2, 3 }, 0, new int[] { 777, 1, 2, 3 })]
+        [TestCase(new int[] { 1 }, 1, new int[] { 1, 777 })]
+        [TestCase(new int[] { 0, 12, 67, 38, 1 }, 1, new int[] { 0, 777, 12, 67, 38, 1 })]
 
-        [TestCase(new int[] { 1, 2, 3 }, new int[] { 1, 777, 2, 3 })]
-        [TestCase(new int[] { 1 }, new int[] { 1, 777 })]
-        [TestCase(new int[] { 0, 12, 67, 38, 1 }, new int[] { 0, 777, 12, 67, 38, 1 })]
-
-        public void AddByIndex_WhenIndexAndValuePassed_ShouldAddValueByIndex(int[] a, int[] b)
+        public void AddByIndex_WhenIndexAndValuePassed_ShouldAddValueByIndex(int[] a, int index,  int[] b)
         {
             ArrayList actual = new ArrayList(a);
             ArrayList expected = new ArrayList(b);
 
-            actual.AddByIndex(1, 777);
+            actual.AddByIndex(index, 777);
 
             Assert.AreEqual(expected, actual);
         }
@@ -302,6 +302,7 @@ namespace List.Tests
         [TestCase(2, new int[] { 7, 7, 7 }, 21)]
         [TestCase(3, new int[] { 7, 7, 7 }, 22)]
         [TestCase(5, new int[] { 7, 7, 7 }, 23)]
+        [TestCase(11, new int[] { 7, 7, 7 }, 20)]
 
         public void AddList_WhenArrayListPassed_ShouldAddListInEnd(int mockNumber1, int[] arrayList, int expectedMockNumber)
         {
@@ -313,8 +314,37 @@ namespace List.Tests
             Assert.AreEqual(expected, actual);
         }
 
+        [TestCase(11, new int[] { 7, 7, 7 }, 20)]
+        [TestCase(2, new int[] { 7, 7, 7 }, 24)]
+        [TestCase(3, new int[] { 7, 7, 7 }, 25)]
+        [TestCase(5, new int[] { 7, 7, 7 }, 26)]
 
-     
+        public void AddListFirst_WhenArrayListPassed_ShouldAddListInEnd(int mockNumber1, int[] arrayList, int expectedMockNumber)
+        {
+            ArrayList actual = new ArrayList(GetMock(mockNumber1));
+            ArrayList expected = new ArrayList(GetMock(expectedMockNumber));
+
+            actual.AddListFirst(arrayList);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(new int[] { 1, 2, 3 }, 3, new int[] { 7, 7, 7 }, new int[] { 1, 2, 3, 7, 7, 7 })]
+        [TestCase(new int[] { 1, 2, 3 }, 0, new int[] { 7, 7, 7 }, new int[] { 7, 7, 7, 1, 2, 3 })]
+        [TestCase(new int[] { 1 }, 1, new int[] { 7, 7, 7 }, new int[] { 1, 7, 7, 7 })]
+        [TestCase(new int[] { 0, 12, 67, 38, 1 }, 1, new int[] { 7, 7, 7 }, new int[] { 0, 7, 7, 7, 12, 67, 38, 1 })]
+
+        public void AddListByIndex_WhenIndexAndArrayListPassed_ShouldAddValueByIndex(int[] a, int index, int[]array, int[] b)
+        {
+            ArrayList actual = new ArrayList(a);
+            ArrayList expected = new ArrayList(b);
+
+            actual.AddListByIndex(index, array);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+
         private static int[] GetMock(int number)
         {
             int[] result = new int[0];
@@ -391,9 +421,14 @@ namespace List.Tests
                     result = new int[] { 513, 7, 7, 7 };
                     break;
                 case 24:
-                    result = new int[] {  };
+                    result = new int[] { 7, 7, 7, 936, 639, 554, 639, 650 };
                     break;
-
+                case 25:
+                    result = new int[] { 7, 7, 7, 368, 802, 331, 962, 331, 782, 392, 331 };
+                    break;
+                case 26:
+                    result = new int[] { 7, 7, 7, 513 };
+                    break;
             }
             return result;
         }
