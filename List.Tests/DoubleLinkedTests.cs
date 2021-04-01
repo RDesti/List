@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Text;
 using NUnit.Framework;
 
+
 namespace List.Tests
 {
-    class LinkedListTests
+    class DoubleLinkedTests
     {
         [TestCase(new int[] { 1, 2, 3 }, new int[] { 1, 2, 3, 777 })]
         [TestCase(new int[] { 1 }, new int[] { 1, 777 })]
@@ -13,13 +14,14 @@ namespace List.Tests
 
         public void Add_WhenValuePassed_ShouldAddValueToEnd(int[] a, int[] b)
         {
-            LinkedList actual = new LinkedList(a);
-            LinkedList expected = new LinkedList(b);
+            DoubleLinkedList actual = new DoubleLinkedList(a);
+            DoubleLinkedList expected = new DoubleLinkedList(b);
 
             actual.Add(777);
 
             Assert.AreEqual(expected, actual);
         }
+
 
         [TestCase(new int[] { 1, 2, 3 }, new int[] { 777, 1, 2, 3 })]
         [TestCase(new int[] { 1 }, new int[] { 777, 1 })]
@@ -27,8 +29,8 @@ namespace List.Tests
 
         public void AddFirst_WhenValuePassed_ShouldAddValueFirst(int[] a, int[] b)
         {
-            LinkedList actual = new LinkedList(a);
-            LinkedList expected = new LinkedList(b);
+            DoubleLinkedList actual = new DoubleLinkedList(a);
+           DoubleLinkedList expected = new DoubleLinkedList(b);
 
             actual.AddFirst(777);
 
@@ -41,8 +43,8 @@ namespace List.Tests
 
         public void AddByIndex_WhenIndexAndValuePassed_ShouldAddValueByIndex(int[] a, int[] b)
         {
-            LinkedList actual = new LinkedList(a);
-            LinkedList expected = new LinkedList(b);
+            DoubleLinkedList actual = new DoubleLinkedList(a);
+            DoubleLinkedList expected = new DoubleLinkedList(b);
 
             actual.AddByIndex(1, 777);
 
@@ -55,11 +57,11 @@ namespace List.Tests
         [TestCase(11, new int[] { 7, 7, 7 }, 20)]
         [TestCase(11, new int[] { }, 11)]
 
-        public void AddList_WhenLinkedListPassed_ShouldAddListInEnd(int mockNumber1, int[] arraylist, int expectedMockNumber)
+        public void AddList_WhenDoubleLinkedListPassed_ShouldAddListInEnd(int mockNumber1, int[] arraylist, int expectedMockNumber)
         {
-            LinkedList list = new LinkedList(arraylist);
-            LinkedList actual = new LinkedList(GetMock(mockNumber1));
-            LinkedList expected = new LinkedList(GetMock(expectedMockNumber));
+            DoubleLinkedList list = new DoubleLinkedList(arraylist);
+            DoubleLinkedList actual = new DoubleLinkedList(GetMock(mockNumber1));
+            DoubleLinkedList expected = new DoubleLinkedList(GetMock(expectedMockNumber));
 
             actual.AddList(list);
 
@@ -72,11 +74,11 @@ namespace List.Tests
         [TestCase(5, new int[] { 7, 7, 7 }, 26)]
         [TestCase(11, new int[] { }, 11)]
 
-        public void AddListFirst_WhenLinkedListPassed_ShouldAddListAtFirst(int mockNumber1, int[] arraylist, int expectedMockNumber)
+        public void AddListFirst_WhenDoubleLinkedListPassed_ShouldAddListAtFirst(int mockNumber1, int[] arraylist, int expectedMockNumber)
         {
-            LinkedList list = new LinkedList(arraylist);
-            LinkedList actual = new LinkedList(GetMock(mockNumber1));
-            LinkedList expected = new LinkedList(GetMock(expectedMockNumber));
+            DoubleLinkedList list = new DoubleLinkedList(arraylist);
+            DoubleLinkedList actual = new DoubleLinkedList(GetMock(mockNumber1));
+            DoubleLinkedList expected = new DoubleLinkedList(GetMock(expectedMockNumber));
 
             actual.AddListFirst(list);
 
@@ -88,11 +90,11 @@ namespace List.Tests
         [TestCase(new int[] { 1 }, 1, new int[] { 7, 7, 7 }, new int[] { 1, 7, 7, 7 })]
         [TestCase(new int[] { 0, 12, 67, 38, 1 }, 1, new int[] { 7, 7, 7 }, new int[] { 0, 7, 7, 7, 12, 67, 38, 1 })]
 
-        public void AddListByIndex_WhenIndexAndLinkedListPassed_ShouldAddValueByIndex(int[] a, int index, int[] arraylist, int[] b)
+        public void AddListByIndex_WhenIndexAndDoubleLinkedListPassed_ShouldAddValueByIndex(int[] a, int index, int[] arraylist, int[] b)
         {
-            LinkedList list = new LinkedList(arraylist);
-            LinkedList actual = new LinkedList(a);
-            LinkedList expected = new LinkedList(b);
+            DoubleLinkedList list = new DoubleLinkedList(arraylist);
+            DoubleLinkedList actual = new DoubleLinkedList(a);
+            DoubleLinkedList expected = new DoubleLinkedList(b);
 
             actual.AddListByIndex(list, index);
 
@@ -104,8 +106,8 @@ namespace List.Tests
 
         public void AddListByIndex_WhenInvalidIndexPassed_ShouldIndexOutOfRangeException(int mockNumber, int index, int[] value)
         {
-            LinkedList list = new LinkedList(value);
-            LinkedList actual = new LinkedList(GetMock(mockNumber));
+            DoubleLinkedList list = new DoubleLinkedList(value);
+            DoubleLinkedList actual = new DoubleLinkedList(GetMock(mockNumber));
 
             Assert.Throws<IndexOutOfRangeException>(() => actual.AddListByIndex(list, index));
         }
@@ -116,8 +118,8 @@ namespace List.Tests
 
         public void Remove_WhenNothingPassed_ShouldRemoveOneElementFromEnd(int[] a, int[] b)
         {
-            LinkedList actual = new LinkedList(a);
-            LinkedList expected = new LinkedList(b);
+            DoubleLinkedList actual = new DoubleLinkedList(a);
+            DoubleLinkedList expected = new DoubleLinkedList(b);
 
             actual.Remove();
 
@@ -131,8 +133,8 @@ namespace List.Tests
 
         public void RemoveFirst_WhenNothingPassed_ShouldRemoveFirstOneElement(int[] a, int[] b)
         {
-            LinkedList actual = new LinkedList(a);
-            LinkedList expected = new LinkedList(b);
+            DoubleLinkedList actual = new DoubleLinkedList(a);
+            DoubleLinkedList expected = new DoubleLinkedList(b);
 
             actual.RemoveFirst();
 
@@ -146,8 +148,8 @@ namespace List.Tests
 
         public void RemoveByIndex_WhenIndexPassed_ShouldRemoveByIndexOneElement(int mockNumber, int expectedMockNumber)
         {
-            LinkedList actual = new LinkedList(GetMock(mockNumber));
-            LinkedList expected = new LinkedList(GetMock(expectedMockNumber));
+            DoubleLinkedList actual = new DoubleLinkedList(GetMock(mockNumber));
+            DoubleLinkedList expected = new DoubleLinkedList(GetMock(expectedMockNumber));
 
             actual.RemoveByIndex(2);
 
@@ -163,8 +165,8 @@ namespace List.Tests
 
         public void Remove_WhenCountElementsPassed_ShouldRemoveCountElement(int mockNumber, int expectedMockNumber)
         {
-            LinkedList actual = new LinkedList(GetMock(mockNumber));
-            LinkedList expected = new LinkedList(GetMock(expectedMockNumber));
+            DoubleLinkedList actual = new DoubleLinkedList(GetMock(mockNumber));
+            DoubleLinkedList expected = new DoubleLinkedList(GetMock(expectedMockNumber));
 
             actual.Remove(5);
 
@@ -180,8 +182,8 @@ namespace List.Tests
 
         public void RemoveFirst_WhenCountElementsPassed_ShouldRemoveFirstCountElement(int mockNumber, int expectedMockNumber)
         {
-            LinkedList actual = new LinkedList(GetMock(mockNumber));
-            LinkedList expected = new LinkedList(GetMock(expectedMockNumber));
+            DoubleLinkedList actual = new DoubleLinkedList(GetMock(mockNumber));
+            DoubleLinkedList expected = new DoubleLinkedList(GetMock(expectedMockNumber));
 
             actual.RemoveFirst(5);
 
@@ -193,10 +195,10 @@ namespace List.Tests
         [TestCase(11, 11)]
         [TestCase(3, 17)]
 
-        public void RemoveByIndex_WhenIndexPassed_ShouldRemoveCountElementByIndex(int mockNumber, int expectedMockNumber)
+        public void RemoveByIndex_WhenIndexAndCountElementsPassed_ShouldRemoveCountElementByIndex(int mockNumber, int expectedMockNumber)
         {
-            LinkedList actual = new LinkedList(GetMock(mockNumber));
-            LinkedList expected = new LinkedList(GetMock(expectedMockNumber));
+            DoubleLinkedList actual = new DoubleLinkedList(GetMock(mockNumber));
+            DoubleLinkedList expected = new DoubleLinkedList(GetMock(expectedMockNumber));
 
             actual.RemoveByIndex(3, 4);
 
@@ -211,7 +213,7 @@ namespace List.Tests
 
         public void RemoveFirstByValue_WhenValuePassed_ShouldRemoveOneValueAndShowIndex(int mockNumber, int value, int expectedIndex)
         {
-            LinkedList array = new LinkedList(GetMock(mockNumber));
+            DoubleLinkedList array = new DoubleLinkedList(GetMock(mockNumber));
 
             int actual = array.RemoveFirstByValue(value);
 
@@ -226,7 +228,7 @@ namespace List.Tests
 
         public void RemoveAllByValue_WhenValuePassed_ShouldRemoveAllValueAndShowCount(int mockNumber, int value, int expected)
         {
-            LinkedList array = new LinkedList(GetMock(mockNumber));
+            DoubleLinkedList array = new DoubleLinkedList(GetMock(mockNumber));
 
             int actual = array.RemoveAllByValue(value);
 
@@ -240,7 +242,7 @@ namespace List.Tests
 
         public void GetByIndex_WhenIndexPassed_ShouldShowValueByIndex(int mockNumber, int index, int expected)
         {
-            LinkedList array = new LinkedList(GetMock(mockNumber));
+            DoubleLinkedList array = new DoubleLinkedList(GetMock(mockNumber));
 
             int actual = array[index];
 
@@ -253,7 +255,7 @@ namespace List.Tests
 
         public void SetByIndex_WhenIndexPassed_ShouldChangeValueByIndex(int mockNumber, int index, int expected)
         {
-            LinkedList actual = new LinkedList(GetMock(mockNumber));
+            DoubleLinkedList actual = new DoubleLinkedList(GetMock(mockNumber));
 
             actual[index] = 777;
 
@@ -267,7 +269,7 @@ namespace List.Tests
 
         public void GetFirstIndex_WhenValuePassed_ShouldFirstIndexByValue(int mockNumber, int value, int expectedIndex)
         {
-            LinkedList array = new LinkedList(GetMock(mockNumber));
+            DoubleLinkedList array = new DoubleLinkedList(GetMock(mockNumber));
 
             int actualIndex = array.GetFirstIndex(value);
 
@@ -281,8 +283,8 @@ namespace List.Tests
 
         public void GetReverst_WhenArrayPassed_ShouldReversArray(int mockNumber, int expectedmockNumber)
         {
-            LinkedList actual = new LinkedList(GetMock(mockNumber));
-            LinkedList expected = new LinkedList(GetMock(expectedmockNumber));
+            DoubleLinkedList actual = new DoubleLinkedList(GetMock(mockNumber));
+            DoubleLinkedList expected = new DoubleLinkedList(GetMock(expectedmockNumber));
 
             actual.GetReverst();
 
@@ -297,7 +299,7 @@ namespace List.Tests
 
         public void FindMax_WhenLinkedListPassed_ShouldMaxValue(int mockNumber, int expected)
         {
-            LinkedList array = new LinkedList(GetMock(mockNumber));
+            DoubleLinkedList array = new DoubleLinkedList(GetMock(mockNumber));
 
             int actual = array.FindMax();
 
@@ -312,7 +314,7 @@ namespace List.Tests
 
         public void FindMin_WhenLinkedList_ShouldMinValue(int mockNumber, int expected)
         {
-            LinkedList array = new LinkedList(GetMock(mockNumber));
+            DoubleLinkedList array = new DoubleLinkedList(GetMock(mockNumber));
 
             int actual = array.FindMin();
 
@@ -327,7 +329,7 @@ namespace List.Tests
 
         public void FindIndexMax_WhenLinkedList_ShouldIndexMaxValue(int mockNumber, int expected)
         {
-            LinkedList array = new LinkedList(GetMock(mockNumber));
+            DoubleLinkedList array = new DoubleLinkedList(GetMock(mockNumber));
 
             int actual = array.FindIndexMax();
 
@@ -342,7 +344,7 @@ namespace List.Tests
 
         public void FindIndexMin_WhenLinkedList_ShouldIndexMinValue(int mockNumber, int expected)
         {
-            LinkedList array = new LinkedList(GetMock(mockNumber));
+            DoubleLinkedList array = new DoubleLinkedList(GetMock(mockNumber));
 
             int actual = array.FindIndexMin();
 
@@ -357,8 +359,8 @@ namespace List.Tests
 
         public void SelectSortAscending_WhenLinkedListPassed_ShouldSortAscending(int mockNumber, int[] expectedarray)
         {
-            LinkedList actual = new LinkedList(GetMock(mockNumber));
-            LinkedList expected = new LinkedList(expectedarray);
+            DoubleLinkedList actual = new DoubleLinkedList(GetMock(mockNumber));
+            DoubleLinkedList expected = new DoubleLinkedList(expectedarray);
 
             actual.SelectSortAscending();
 
@@ -372,8 +374,8 @@ namespace List.Tests
 
         public void InsertSortDescending_WhenLinkedListPassed_ShouldSortDescending(int mockNumber, int[] expectedarray)
         {
-            LinkedList actual = new LinkedList(GetMock(mockNumber));
-            LinkedList expected = new LinkedList(expectedarray);
+            DoubleLinkedList actual = new DoubleLinkedList(GetMock(mockNumber));
+            DoubleLinkedList expected = new DoubleLinkedList(expectedarray);
 
             actual.InsertSortDescending();
 

@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System;
 
 namespace List.Tests
 {
@@ -38,7 +39,7 @@ namespace List.Tests
         [TestCase(new int[] { 1 }, 1, new int[] { 1, 777 })]
         [TestCase(new int[] { 0, 12, 67, 38, 1 }, 1, new int[] { 0, 777, 12, 67, 38, 1 })]
 
-        public void AddByIndex_WhenIndexAndValuePassed_ShouldAddValueByIndex(int[] a, int index,  int[] b)
+        public void AddByIndex_WhenIndexAndValuePassed_ShouldAddValueByIndex(int[] a, int index, int[] b)
         {
             ArrayList actual = new ArrayList(a);
             ArrayList expected = new ArrayList(b);
@@ -48,6 +49,74 @@ namespace List.Tests
             Assert.AreEqual(expected, actual);
         }
 
+        [TestCase(new int[] { 1, 2, 3 }, 5, 777)]
+        [TestCase(new int[] { 1, 2, 3 }, -4, 777)]
+        [TestCase(new int[] { 1 }, 7, 7)]
+        [TestCase(new int[] { 0, 12, 67, 38, 1 }, -1, 3)]
+
+        public void AddByIndex_WhenInvalidIndexPassed_ShouldIndexOutOfRangeException(int[] a, int index, int value)
+        {
+            ArrayList actual = new ArrayList(a);
+
+            Assert.Throws<IndexOutOfRangeException>(() => actual.AddByIndex(index, value));
+        }
+
+        [TestCase(2, new int[] { 7, 7, 7 }, 21)]
+        [TestCase(3, new int[] { 7, 7, 7 }, 22)]
+        [TestCase(5, new int[] { 7, 7, 7 }, 23)]
+        [TestCase(11, new int[] { 7, 7, 7 }, 20)]
+        [TestCase(11, new int[] { }, 11)]
+
+        public void AddList_WhenArrayListPassed_ShouldAddListInEnd(int mockNumber1, int[] arrayList, int expectedMockNumber)
+        {
+            ArrayList actual = new ArrayList(GetMock(mockNumber1));
+            ArrayList expected = new ArrayList(GetMock(expectedMockNumber));
+
+            actual.AddList(arrayList);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(11, new int[] { 7, 7, 7 }, 20)]
+        [TestCase(2, new int[] { 7, 7, 7 }, 24)]
+        [TestCase(3, new int[] { 7, 7, 7 }, 25)]
+        [TestCase(5, new int[] { 7, 7, 7 }, 26)]
+        [TestCase(11, new int[] { }, 11)]
+
+        public void AddListFirst_WhenArrayListPassed_ShouldAddListInEnd(int mockNumber1, int[] arrayList, int expectedMockNumber)
+        {
+            ArrayList actual = new ArrayList(GetMock(mockNumber1));
+            ArrayList expected = new ArrayList(GetMock(expectedMockNumber));
+
+            actual.AddListFirst(arrayList);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(new int[] { 1, 2, 3 }, 3, new int[] { 7, 7, 7 }, new int[] { 1, 2, 3, 7, 7, 7 })]
+        [TestCase(new int[] { 1, 2, 3 }, 0, new int[] { 7, 7, 7 }, new int[] { 7, 7, 7, 1, 2, 3 })]
+        [TestCase(new int[] { 1 }, 1, new int[] { 7, 7, 7 }, new int[] { 1, 7, 7, 7 })]
+        [TestCase(new int[] { 0, 12, 67, 38, 1 }, 1, new int[] { 7, 7, 7 }, new int[] { 0, 7, 7, 7, 12, 67, 38, 1 })]
+
+        public void AddListByIndex_WhenIndexAndArrayListPassed_ShouldAddValueByIndex(int[] a, int index, int[] array, int[] b)
+        {
+            ArrayList actual = new ArrayList(a);
+            ArrayList expected = new ArrayList(b);
+
+            actual.AddListByIndex(index, array);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(1, -1, new int[] {13})]
+        [TestCase(2, -11, new int[] { 0 })]
+
+        public void AddListByIndex_WhenInvalidIndexPassed_ShouldIndexOutOfRangeException(int mockNumber, int index, int[] value)
+        {
+            ArrayList actual = new ArrayList(GetMock(mockNumber));
+
+            Assert.Throws<IndexOutOfRangeException>(() => actual.AddListByIndex(index, value));
+        }
 
         [TestCase(new int[] { 1, 2, 3 }, new int[] { 1, 2 })]
         [TestCase(new int[] { 1 }, new int[] { })]
@@ -78,7 +147,6 @@ namespace List.Tests
             Assert.AreEqual(expected, actual);
         }
 
-
         [TestCase(1, 6)]
         [TestCase(2, 7)]
         [TestCase(3, 8)]
@@ -92,6 +160,18 @@ namespace List.Tests
             actual.RemoveByIndex(2);
 
             Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(new int[] { 1, 2, 3 }, 5)]
+        [TestCase(new int[] { 1, 2, 3 }, -4)]
+        [TestCase(new int[] { 1 }, 7)]
+        [TestCase(new int[] { 0, 12, 67, 38, 1 }, -1)]
+
+        public void RemoveByIndex_WhenInvalidIndexPassed_ShouldIndexOutOfRangeException(int[] a, int index)
+        {
+            ArrayList actual = new ArrayList(a);
+
+            Assert.Throws<IndexOutOfRangeException>(() => actual.RemoveByIndex(index));
         }
 
         [TestCase(1, 10)]
@@ -110,6 +190,15 @@ namespace List.Tests
             Assert.AreEqual(expected, actual);
         }
 
+        [TestCase(1, -1)]
+        [TestCase(2, -11)]
+
+        public void Remove_WhenInvalidCountElementsPassed_ShouldArgumentException(int mockNumber, int countElements)
+        {
+            ArrayList actual = new ArrayList(GetMock(mockNumber));
+
+            Assert.Throws<ArgumentException>(() => actual.Remove(countElements));
+        }
 
         [TestCase(1, 13)]
         [TestCase(2, 11)]
@@ -127,6 +216,15 @@ namespace List.Tests
             Assert.AreEqual(expected, actual);
         }
 
+        [TestCase(1, -1)]
+        [TestCase(2, -11)]
+
+        public void RemoveFirst_WhenInvalidCountElementsPassed_ShouldArgumentException(int mockNumber, int countElements)
+        {
+            ArrayList actual = new ArrayList(GetMock(mockNumber));
+
+            Assert.Throws<ArgumentException>(() => actual.RemoveFirst(countElements));
+        }
 
         [TestCase(1, 15)]
         [TestCase(2, 16)]
@@ -142,6 +240,55 @@ namespace List.Tests
             Assert.AreEqual(expected, actual);
         }
 
+        [TestCase(1, 1, -1)]
+        [TestCase(2, 1, -11)]
+
+        public void RemoveByIndex_WhenInvalidCountElementsPassed_ShouldArgumentException(int mockNumber, int index, int countElements)
+        {
+            ArrayList actual = new ArrayList(GetMock(mockNumber));
+
+            Assert.Throws<ArgumentException>(() => actual.RemoveByIndex(index, countElements));
+        }
+
+        [TestCase(1, -1, 13)]
+        [TestCase(2, -11, 0)]
+
+        public void RemoveByIndex_WhenInvalidIndexPassed_ShouldIndexOutOfRangeException(int mockNumber, int index, int countElements)
+        {
+            ArrayList actual = new ArrayList(GetMock(mockNumber));
+
+            Assert.Throws<IndexOutOfRangeException>(() => actual.RemoveByIndex(index, countElements));
+        }
+
+        [TestCase(1, 77, 6)]
+        [TestCase(2, 639, 1)]
+        [TestCase(3, 331, 2)]
+        [TestCase(4, 70, -1)]
+        [TestCase(5, 513, 0)]
+
+        public void RemoveFirstByValue_WhenValuePassed_ShouldRemoveOneValueAndShowIndex(int mockNumber, int value, int expectedIndex)
+        {
+            ArrayList array = new ArrayList(GetMock(mockNumber));
+
+            int actual = array.RemoveFirstByValue(value);
+
+            Assert.AreEqual(expectedIndex, actual);
+        }
+
+        [TestCase(1, 77, 1)]
+        [TestCase(2, 639, 2)]
+        [TestCase(3, 331, 3)]
+        [TestCase(4, 70, 0)]
+        [TestCase(5, 0, 0)]
+
+        public void RemoveAllByValue_WhenValuePassed_ShouldRemoveAllValueAndShowCount(int mockNumber, int value, int expected)
+        {
+            ArrayList array = new ArrayList(GetMock(mockNumber));
+
+            int actual = array.RemoveAllByValue(value);
+
+            Assert.AreEqual(expected, actual);
+        }
 
         [TestCase(1, 0, 744)]
         [TestCase(2, 4, 650)]
@@ -157,7 +304,6 @@ namespace List.Tests
             Assert.AreEqual(expected, actual);
         }
 
-
         [TestCase(11, 0, 777)]
         [TestCase(2, 4, 777)]
         [TestCase(3, 4, 777)]
@@ -172,6 +318,15 @@ namespace List.Tests
             Assert.AreEqual(expected, actual[index]);
         }
 
+        [TestCase(1, -1, 13)]
+        [TestCase(2, -11, 0)]
+
+        public void SetByIndex_WhenInvalidIndexPassed_ShouldIndexOutOfRangeException(int mockNumber, int index, int value)
+        {
+            ArrayList actual = new ArrayList(GetMock(mockNumber));
+
+            Assert.Throws<IndexOutOfRangeException>(() => actual[index] = value);
+        }
 
         [TestCase(11, 777, -1)]
         [TestCase(2, 639, 1)]
@@ -186,7 +341,6 @@ namespace List.Tests
 
             Assert.AreEqual(expectedIndex, actualIndex);
         }
-
 
         [TestCase(11, 11)]
         [TestCase(2, 18)]
@@ -203,7 +357,6 @@ namespace List.Tests
             Assert.AreEqual(expected, actual);
         }
 
-
         [TestCase(4, 89)]
         [TestCase(1, 1000)]
         [TestCase(2, 936)]
@@ -218,7 +371,6 @@ namespace List.Tests
 
             Assert.AreEqual(expected, actual);
         }
-
 
         [TestCase(4, 69)]
         [TestCase(1, 77)]
@@ -235,12 +387,12 @@ namespace List.Tests
             Assert.AreEqual(expected, actual);
         }
 
-
         [TestCase(4, 0)]
         [TestCase(1, 3)]
         [TestCase(2, 0)]
         [TestCase(3, 3)]
         [TestCase(5, 0)]
+        [TestCase(11, -1)]
 
         public void FindIndexMax_WhenArrayList_ShouldIndexMaxValue(int mockNumber, int expected)
         {
@@ -266,84 +418,36 @@ namespace List.Tests
             Assert.AreEqual(expected, actual);
         }
 
+        [TestCase(4, new int[] { 69, 72, 89 })]
+        [TestCase(1, new int[] { 77, 78, 121, 168, 295, 327, 377, 652, 744, 876, 934, 966, 984, 1000 })]
+        [TestCase(2, new int[] { 554, 639, 639, 650, 936 })]
+        [TestCase(3, new int[] { 331, 331, 331, 368, 392, 782, 802, 962 })]
+        [TestCase(5, new int[] { 513 })]
 
-        [TestCase(1, 77, 6)]
-        [TestCase(2, 639, 1)]
-        [TestCase(3, 331, 2)]
-        [TestCase(4, 70, -1)]
-        [TestCase(5, 513, 0)]
-
-        public void RemoveFirstByValue_WhenValuePassed_ShouldRemoveOneValueAndShowIndex(int mockNumber, int value, int expectedIndex)
+        public void SelectSortAscending_WhenArrayListPassed_ShouldSortAscending(int mockNumber, int[] expectedarray)
         {
-            ArrayList array = new ArrayList(GetMock(mockNumber));
+            ArrayList actual = new ArrayList(GetMock(mockNumber));
+            ArrayList expected = new ArrayList(expectedarray);
 
-            int actual = array.RemoveFirstByValue(value);
-
-            Assert.AreEqual(expectedIndex, actual);
-        }
-
-
-        [TestCase(1, 77, 1)]
-        [TestCase(2, 639, 2)]
-        [TestCase(3, 331, 3)]
-        [TestCase(4, 70, 0)]
-        [TestCase(5, 0, 0)]
-
-        public void RemoveAllByValue_WhenValuePassed_ShouldRemoveAllValueAndShowCount(int mockNumber, int value, int expected)
-        {
-            ArrayList array = new ArrayList(GetMock(mockNumber));
-
-            int actual = array.RemoveAllByValue(value);
+            actual.SelectSortAscending();
 
             Assert.AreEqual(expected, actual);
         }
 
+        [TestCase(4, new int[] { 89, 72, 69 })]
+        [TestCase(2, new int[] { 936, 650, 639, 639, 554 })]
+        [TestCase(3, new int[] { 962, 802, 782, 392, 368, 331, 331, 331})]
+        [TestCase(5, new int[] { 513 })]
 
-        [TestCase(2, new int[] { 7, 7, 7 }, 21)]
-        [TestCase(3, new int[] { 7, 7, 7 }, 22)]
-        [TestCase(5, new int[] { 7, 7, 7 }, 23)]
-        [TestCase(11, new int[] { 7, 7, 7 }, 20)]
-
-        public void AddList_WhenArrayListPassed_ShouldAddListInEnd(int mockNumber1, int[] arrayList, int expectedMockNumber)
+        public void InsertSortDescending_WhenArrayListPassed_ShouldSortDescending(int mockNumber, int[] expectedarray)
         {
-            ArrayList actual = new ArrayList(GetMock(mockNumber1));
-            ArrayList expected = new ArrayList(GetMock(expectedMockNumber));
+            ArrayList actual = new ArrayList(GetMock(mockNumber));
+            ArrayList expected = new ArrayList(expectedarray);
 
-            actual.AddList(arrayList);
+            actual.InsertSortDescending();
 
             Assert.AreEqual(expected, actual);
         }
-
-        [TestCase(11, new int[] { 7, 7, 7 }, 20)]
-        [TestCase(2, new int[] { 7, 7, 7 }, 24)]
-        [TestCase(3, new int[] { 7, 7, 7 }, 25)]
-        [TestCase(5, new int[] { 7, 7, 7 }, 26)]
-
-        public void AddListFirst_WhenArrayListPassed_ShouldAddListInEnd(int mockNumber1, int[] arrayList, int expectedMockNumber)
-        {
-            ArrayList actual = new ArrayList(GetMock(mockNumber1));
-            ArrayList expected = new ArrayList(GetMock(expectedMockNumber));
-
-            actual.AddListFirst(arrayList);
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [TestCase(new int[] { 1, 2, 3 }, 3, new int[] { 7, 7, 7 }, new int[] { 1, 2, 3, 7, 7, 7 })]
-        [TestCase(new int[] { 1, 2, 3 }, 0, new int[] { 7, 7, 7 }, new int[] { 7, 7, 7, 1, 2, 3 })]
-        [TestCase(new int[] { 1 }, 1, new int[] { 7, 7, 7 }, new int[] { 1, 7, 7, 7 })]
-        [TestCase(new int[] { 0, 12, 67, 38, 1 }, 1, new int[] { 7, 7, 7 }, new int[] { 0, 7, 7, 7, 12, 67, 38, 1 })]
-
-        public void AddListByIndex_WhenIndexAndArrayListPassed_ShouldAddValueByIndex(int[] a, int index, int[]array, int[] b)
-        {
-            ArrayList actual = new ArrayList(a);
-            ArrayList expected = new ArrayList(b);
-
-            actual.AddListByIndex(index, array);
-
-            Assert.AreEqual(expected, actual);
-        }
-
 
         private static int[] GetMock(int number)
         {
