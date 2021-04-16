@@ -352,7 +352,7 @@ namespace List.Tests
             ArrayList actual = new ArrayList(GetMock(mockNumber));
             ArrayList expected = new ArrayList(GetMock(expectedmockNumber));
 
-            actual.GetReverst();
+            actual.Reverse();
 
             Assert.AreEqual(expected, actual);
         }
@@ -452,6 +452,7 @@ namespace List.Tests
         private static int[] GetMock(int number)
         {
             int[] result = new int[0];
+
             switch (number)
             {
                 case 1:
@@ -534,6 +535,7 @@ namespace List.Tests
                     result = new int[] { 7, 7, 7, 513 };
                     break;
             }
+
             return result;
         }
     }

@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using NUnit.Framework;
-
 
 namespace List.Tests
 {
@@ -21,7 +18,6 @@ namespace List.Tests
 
             Assert.AreEqual(expected, actual);
         }
-
 
         [TestCase(new int[] { 1, 2, 3 }, new int[] { 777, 1, 2, 3 })]
         [TestCase(new int[] { 1 }, new int[] { 777, 1 })]
@@ -51,6 +47,20 @@ namespace List.Tests
             Assert.AreEqual(expected, actual);
         }
 
+        [TestCase(new int[] { 1, 2, 3 }, -1, 1)]
+        [TestCase(new int[] { 1, 2, 3 }, 4, 1)]
+
+        public void AddByIndex_WhenIncorrectIndexPassed_ThenReturnIndexOutOfRange(int[] actualArray, int index, int value)
+        {
+            Assert.Throws<IndexOutOfRangeException>(() =>
+            {
+                DoubleLinkedList actual = new DoubleLinkedList(actualArray);
+
+                actual.AddByIndex(index, value);
+
+            });
+        }
+
         [TestCase(2, new int[] { 7, 7, 7 }, 21)]
         [TestCase(3, new int[] { 7, 7, 7 }, 22)]
         [TestCase(5, new int[] { 7, 7, 7 }, 23)]
@@ -68,6 +78,18 @@ namespace List.Tests
             Assert.AreEqual(expected, actual);
         }
 
+        [TestCase(new int[] { })]
+
+        public void AddList_WhenNullPassed_ThenReturnArgumentNullException(int[] actualArray)
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                DoubleLinkedList actual = new DoubleLinkedList(actualArray);
+
+                actual.AddList(null);
+            });
+        }
+
         [TestCase(11, new int[] { 7, 7, 7 }, 20)]
         [TestCase(2, new int[] { 7, 7, 7 }, 24)]
         [TestCase(3, new int[] { 7, 7, 7 }, 25)]
@@ -83,6 +105,18 @@ namespace List.Tests
             actual.AddListFirst(list);
 
             Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(new int[] { })]
+
+        public void AddListFirst_WhenNullPassed_ThenReturnArgumentNullException(int[] actualArray)
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                DoubleLinkedList actual = new DoubleLinkedList(actualArray);
+
+                actual.AddListFirst(null);
+            });
         }
 
         [TestCase(new int[] { 1, 2, 3 }, 3, new int[] { 7, 7, 7 }, new int[] { 1, 2, 3, 7, 7, 7 })]
@@ -129,7 +163,6 @@ namespace List.Tests
         [TestCase(new int[] { 1, 2, 3 }, new int[] { 2, 3 })]
         [TestCase(new int[] { 0, 12, 67, 38, 1 }, new int[] { 12, 67, 38, 1 })]
         [TestCase(new int[] { 1 }, new int[] { })]
-        [TestCase(new int[] { }, new int[] { })]
 
         public void RemoveFirst_WhenNothingPassed_ShouldRemoveFirstOneElement(int[] a, int[] b)
         {
@@ -156,6 +189,19 @@ namespace List.Tests
             Assert.AreEqual(expected, actual);
         }
 
+        [TestCase(new int[] { 1, 2, 3 }, -1)]
+        [TestCase(new int[] { 1, 2, 3 }, 3)]
+
+        public void RemoveByIndex_WhenIncorrectIndexPassed_ThenReturnIndexOutOfRangeException(int[] actualArray, int index)
+        {
+            Assert.Throws<IndexOutOfRangeException>(() =>
+            {
+                DoubleLinkedList actual = new DoubleLinkedList(actualArray);
+
+                actual.RemoveByIndex(index);
+            });
+        }
+
         [TestCase(1, 10)]
         [TestCase(2, 11)]
         [TestCase(3, 12)]
@@ -171,6 +217,19 @@ namespace List.Tests
             actual.Remove(5);
 
             Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(new int[] { }, -1)]
+
+        public void Remove_WhennListIsEmptyAndElementsPassed_ThenArgumentException(int[] actualArray, int count)
+        {
+            Assert.Throws<ArgumentException>(() =>
+            {
+                DoubleLinkedList actual = new DoubleLinkedList(actualArray);
+
+                actual.Remove(count);
+
+            });
         }
 
         [TestCase(1, 13)]
@@ -190,9 +249,21 @@ namespace List.Tests
             Assert.AreEqual(expected, actual);
         }
 
+        [TestCase(new int[] { }, -1)]
+
+        public void RemoveFirst_WhennListIsEmptyElementsPassed_ThenArgumentException(int[] actualArray, int count)
+        {
+            Assert.Throws<ArgumentException>(() =>
+            {
+                DoubleLinkedList actual = new DoubleLinkedList(actualArray);
+
+                actual.RemoveFirst(count);
+
+            });
+        }
+
         [TestCase(1, 15)]
         [TestCase(2, 16)]
-        [TestCase(11, 11)]
         [TestCase(3, 17)]
 
         public void RemoveByIndex_WhenIndexAndCountElementsPassed_ShouldRemoveCountElementByIndex(int mockNumber, int expectedMockNumber)
@@ -203,6 +274,20 @@ namespace List.Tests
             actual.RemoveByIndex(3, 4);
 
             Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(new int[] { 1, 2, 3 }, -1, 0)]
+        [TestCase(new int[] { 1, 2, 3 }, -1, 0)]
+        [TestCase(new int[] { 1, 2, 3 }, 0, -1)]
+
+        public void RemoveByIndex_WhenIndexOrcountIncorrectPassed_ThenReturnArgumentException(int[] actualArray, int index, int count)
+        {
+            Assert.Throws<ArgumentException>(() =>
+            {
+                DoubleLinkedList actual = new DoubleLinkedList(actualArray);
+
+                actual.RemoveByIndex(index, count);
+            });
         }
 
         [TestCase(1, 77, 6)]
@@ -281,14 +366,26 @@ namespace List.Tests
         [TestCase(4, 19)]
         [TestCase(5, 5)]
 
-        public void GetReverst_WhenArrayPassed_ShouldReversArray(int mockNumber, int expectedmockNumber)
+        public void Reverse_WhenArrayPassed_ShouldReversArray(int mockNumber, int expectedmockNumber)
         {
             DoubleLinkedList actual = new DoubleLinkedList(GetMock(mockNumber));
             DoubleLinkedList expected = new DoubleLinkedList(GetMock(expectedmockNumber));
 
-            actual.GetReverst();
+            actual.Reverse();
 
             Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+
+        public void Reverse_WhenMethodCalled_ThenNullReferenceException()
+        {
+            Assert.Throws<NullReferenceException>(() =>
+            {
+                DoubleLinkedList actual = null;
+
+                actual.Reverse();
+            });
         }
 
         [TestCase(4, 89)]
@@ -336,6 +433,18 @@ namespace List.Tests
             Assert.AreEqual(expected, actual);
         }
 
+        [TestCase(new int[] { })]
+
+        public void FindIndexMax_WhenListIsEmptyPassed_ThenReturnArgumentNullException(int[] actualArray)
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                DoubleLinkedList list = new DoubleLinkedList(actualArray);
+
+                int actual = list.FindIndexMax();
+            });
+        }
+
         [TestCase(4, 1)]
         [TestCase(1, 6)]
         [TestCase(2, 2)]
@@ -349,6 +458,18 @@ namespace List.Tests
             int actual = array.FindIndexMin();
 
             Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(new int[] { })]
+
+        public void FindIndexMin_WhenListIsEmptyPassed_ThenReturnArgumentNullException(int[] actualArray)
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                DoubleLinkedList list = new DoubleLinkedList(actualArray);
+
+                int actual = list.FindIndexMin();
+            });
         }
 
         [TestCase(4, new int[] { 69, 72, 89 })]
@@ -367,6 +488,18 @@ namespace List.Tests
             Assert.AreEqual(expected, actual);
         }
 
+        [TestCase(new int[] { })]
+
+        public void SelectSortAscending_WhenListIsEmptyPassed_ThenReturnArgumentException(int[] actualArray)
+        {
+            Assert.Throws<ArgumentException>(() =>
+            {
+                DoubleLinkedList actual = new DoubleLinkedList(actualArray);
+
+                actual.SelectSortAscending();
+            });
+        }
+
         [TestCase(4, new int[] { 89, 72, 69 })]
         [TestCase(2, new int[] { 936, 650, 639, 639, 554 })]
         [TestCase(3, new int[] { 962, 802, 782, 392, 368, 331, 331, 331 })]
@@ -382,9 +515,22 @@ namespace List.Tests
             Assert.AreEqual(expected, actual);
         }
 
+        [TestCase(new int[] { })]
+
+        public void InsertSortAscending_WhenListIsEmptyPassed_ThenReturnArgumentException(int[] actualArray)
+        {
+            Assert.Throws<ArgumentException>(() =>
+            {
+                DoubleLinkedList actual = new DoubleLinkedList(actualArray);
+
+                actual.InsertSortDescending();
+            });
+        }
+
         private static int[] GetMock(int number)
         {
             int[] result = new int[0];
+
             switch (number)
             {
                 case 1:
@@ -467,6 +613,7 @@ namespace List.Tests
                     result = new int[] { 7, 7, 7, 513 };
                     break;
             }
+
             return result;
         }
     }
